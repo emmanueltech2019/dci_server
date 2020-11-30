@@ -1,7 +1,7 @@
 {
   "name": "dci_backend",
   "version": "1.0.0",
-  "description": "double coin api",
+  "description": "double coin api ",
   "main": "server.js",
   "scripts": {
     "start": "node server",
