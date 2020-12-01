@@ -186,14 +186,14 @@ exports.verify=(req,res,next)=>{
         }
     });
     let mailOptions = {
-        // should be replaced with real recipient's accouns
+        // should be replaced with real recipient's account
         to: req.body.email,
         subject: req.body.subject,
         text: req.body.message
     };
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            res.send(error)
+            return console.log(error);
         }
         console.log('Message %s sent: %s', info.messageId, info.response);
     });
