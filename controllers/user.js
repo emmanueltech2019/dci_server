@@ -172,7 +172,7 @@ exports.verify=(req,res,next)=>{
 
       let transporter = nodeMailer.createTransport({
         host: "dci.ng",
-        port:  465,
+        port:  26,
         secure: true,
         auth: {
             // should be replaced with real sender's account
