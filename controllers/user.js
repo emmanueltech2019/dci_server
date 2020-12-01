@@ -54,13 +54,13 @@ exports.updatePersonalDetails = (req, res, next) => {
 
 exports.verify=(req,res,next)=>{
   let accesscode =securePin.generatePinSync(4);
-  sgMail.setApiKey(`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`);
+  sgMail.setApiKey(SEND_GRID_API_KEY);
   const msg = {
     to: req.body.email,
     from: 'emmanueltech2019@gmail.com', // Use the email address or domain you verified above
-    subject: 'Double coin verification',
+    subject: 'Dci verification',
     text: 'verificetion code',
-    html: `<h1>Your Double Coin verification code </h1>:<h2>${accesscode}</h2><br/>`,
+    html: `<h1>Your DCi verification code </h1>:<h2>${accesscode}</h2><br/>`,
   };
   (async () => {
     try {
