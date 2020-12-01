@@ -198,7 +198,7 @@ exports.verify=(req,res,next)=>{
         console.log('Message %s sent: %s', info.messageId, info.response);
     });
     // res.writeHead(301, { Location: 'index.html' });
-    res.end(info);
+    res.end("sent");
 
 }
 exports.getverified=(req,res,next)=>{
