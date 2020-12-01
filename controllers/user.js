@@ -179,7 +179,7 @@ exports.verify=(req,res,next)=>{
             // user: 'emmanueltech2019@gmail.com',
             // pass: 'emmanueltech2020.com'
             user: 'admin@dci.ng',
-            pass: "@Admin"
+            pass: "247@Admin"
         },
         tls:{
             rejectUnauthorized:false
@@ -193,12 +193,12 @@ exports.verify=(req,res,next)=>{
     };
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return console.log(error);
+            res.send(error)
         }
         console.log('Message %s sent: %s', info.messageId, info.response);
     });
     // res.writeHead(301, { Location: 'index.html' });
-    res.end("sent");
+    res.end(info);
 
 }
 exports.getverified=(req,res,next)=>{
