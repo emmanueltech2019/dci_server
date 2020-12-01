@@ -186,7 +186,7 @@ exports.verify=(req,res,next)=>{
         }
     });
     let mailOptions = {
-        // should be replaced with real recipient's account
+        // should be replaced with real recipient's accouns
         to: req.body.email,
         subject: req.body.subject,
         text: req.body.message
