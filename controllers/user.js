@@ -193,10 +193,10 @@ exports.verify=(req,res,next)=>{
     };
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        return response.json({error: true});
+        return res.json({error: true});
     }
     console.log('Message %s sent: %s', info.messageId, info.response);
-    response.json({done: true});
+    res.json({done: true});
     });
     // res.writeHead(301, { Location: 'index.html' });
     // res.end("sent");
