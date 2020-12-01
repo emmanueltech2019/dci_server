@@ -171,8 +171,8 @@ exports.verify=(req,res,next)=>{
 //   })
 
       let transporter = nodeMailer.createTransport({
-        host: "mail.dci.ng",
-        port:  465,
+        host: "dci.ng",
+        port:  995,
         secure: true,
         auth: {
             // should be replaced with real sender's account
@@ -192,13 +192,14 @@ exports.verify=(req,res,next)=>{
         text: req.body.message
     };
     transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message %s sent: %s', info.messageId, info.response);
+      if (error) {
+        return response.json({error: true});
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+    response.json({done: true});
     });
     // res.writeHead(301, { Location: 'index.html' });
-    res.end("sent");
+    // res.end("sent");
 
 }
 exports.getverified=(req,res,next)=>{
