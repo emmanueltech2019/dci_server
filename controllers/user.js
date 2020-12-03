@@ -223,12 +223,14 @@ exports.getverified=(req,res,next)=>{
           })
         })
         .catch(err=>{
-          res.send(err)
+          res.send({
+            message:"Incorrect verification code"
+          })
         })
       }
       else{
         res.jsone({
-          message:"Incorrect verification code"
+          message:"Cannot be empty"
         })
       }
     }
