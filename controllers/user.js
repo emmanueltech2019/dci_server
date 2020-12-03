@@ -213,6 +213,7 @@ exports.getverified=(req,res,next)=>{
     if(user.accesscode){
       if(user.accesscode===accesscode){
         user.verified=true
+        user.emailverified=true
         user.save()
         .then(response=>{
           res.json({
