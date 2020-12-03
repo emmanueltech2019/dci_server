@@ -229,7 +229,7 @@ exports.getverified=(req,res,next)=>{
         })
       }
       else{
-        res.jsone({
+        res.json({
           message:"Cannot be empty"
         })
       }
