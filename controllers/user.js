@@ -54,34 +54,34 @@ exports.updatePersonalDetails = (req, res, next) => {
 
 exports.verify=(req,res,next)=>{
   let accesscode =securePin.generatePinSync(4);
-  // sgMail.setApiKey(SEND_GRID_API_KEY);
-  // const msg = {
-  //   to: req.body.email,
-  //   from: 'emmanueltech2019@gmail.com', // Use the email address or domain you verified above
-  //   subject: 'Dci verification',
-  //   text: 'verificetion code',
-  //   html: `<h1>Your DCi verification code </h1>:<h2>${accesscode}</h2><br/>`,
-  // };
-  // (async () => {
-  //   try {
-  //     await sgMail.send(msg)
-  //     .then(response=>{
-  //       User.findOne({email:req.body.email})
-  //       .then(user=>{
-  //         user.accesscode=accesscode
-  //         user.save()
-  //         res.send(response)
-  //       })
-  //     })
-  //   } catch (error) {
-  //     console.error(error);
+  sgMail.setApiKey(SEND_GRID_API_KEY)
+  const msg = {
+    to: req.body.email,
+    from: 'emmanueltech2019@gmail.com', // Use the email address or domain you verified above
+    subject: 'Dci verification',
+    text: 'verificetion code',
+    html: `<h1>Your DCi verification code </h1>:<h2>${accesscode}</h2><br/>`,
+  };
+  (async () => {
+    try {
+      await sgMail.send(msg)
+      .then(response=>{
+        User.findOne({email:req.body.email})
+        .then(user=>{
+          user.accesscode=accesscode
+          user.save()
+          res.send(response)
+        })
+      })
+    } catch (error) {
+      console.error(error);
    
-  //     if (error.response) {
-  //       console.error(error.response.body)
-  //       res.send("error occured")
-  //     }
-  //   }
-  // })();
+      if (error.response) {
+        console.error(error.response.body)
+        res.send("error occured")
+      }
+    }
+  })();
   // nodeMailer.createTestAccount((err, account) => {
   //   if (err) {
   //       console.error('Failed to create a testing account. ' + err.message);
@@ -170,34 +170,34 @@ exports.verify=(req,res,next)=>{
 //     })
 //   })
 
-      let transporter = nodeMailer.createTransport({
-        host: "dci.ng",
-        port:  995,
-        secure: true,
-        auth: {
+      // let transporter = nodeMailer.createTransport({
+      //   host: "dci.ng",
+      //   port:  995,
+      //   secure: true,
+      //   auth: {
             // should be replaced with real sender's account
             // user: 'emmanueltech2019@gmail.com',
             // pass: 'emmanueltech2020.com'
-            user: 'admin@dci.ng',
-            pass: "247$Admin"
-        },
-        tls:{
-            rejectUnauthorized:false
-        }
-    });
-    let mailOptions = {
+    //         user: 'admin@dci.ng',
+    //         pass: "247$Admin"
+    //     },
+    //     tls:{
+    //         rejectUnauthorized:false
+    //     }
+    // });
+    // let mailOptions = {
         // should be replaced with real recipient's account
-        to: req.body.email,
-        subject: req.body.subject,
-        text: req.body.message
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return res.json({error: true});
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
-    res.json({done: true});
-    });
+    //     to: req.body.email,
+    //     subject: req.body.subject,
+    //     text: req.body.message
+    // };
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //   if (error) {
+    //     return res.json({error: true});
+    // }
+    // console.log('Message %s sent: %s', info.messageId, info.response);
+    // res.json({done: true});
+    // });
     // res.writeHead(301, { Location: 'index.html' });
     // res.end("sent");
 
