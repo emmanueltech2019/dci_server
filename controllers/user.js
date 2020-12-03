@@ -230,7 +230,7 @@ exports.getverified=(req,res,next)=>{
       }
       else{
         res.json({
-          message:"Cannot be empty"
+          message:"Incorrect verification code"
         })
       }
     }
