@@ -78,7 +78,11 @@ exports.verify=(req,res,next)=>{
    
       if (error.response) {
         console.error(error.response.body)
-        res.send("error occured")
+        res.json({
+          message:"error occured",
+          message1:error.response.body,
+          error:error
+        })
       }
     }
   })();
@@ -213,11 +217,17 @@ exports.getverified=(req,res,next)=>{
         .then(response=>{
           res.json({
             status:true,
+            message:"Verification successful",
             user
           })
         })
         .catch(err=>{
           res.send(err)
+        })
+      }
+      else{
+        res.jsone({
+          message:"Incorrect verification code"
         })
       }
     }
