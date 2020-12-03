@@ -21,6 +21,10 @@ const UserSchema = new Schema({
     phonenumber:{
         type:Number,
     },
+    emailverified:{
+        type:Boolean,
+        default:false
+    },
     occupation:{
         type:String,
     },

@@ -210,7 +210,7 @@ exports.getverified=(req,res,next)=>{
   const {email,accesscode} = req.body
   User.findOne({email},(err,user)=>{
     if(err) console.log(err)
-    if(user.accesscode.value){
+    if(user.accesscode){
       if(user.accesscode===accesscode){
         user.verified=true
         user.save()
