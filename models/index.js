@@ -11,11 +11,11 @@ const DciSchema = new Schema({
         default:0    
     },
     investmentBalance:{
-        type:String,
+        type:Number,
         default:0    
     },
 
 },{ timestamps: true })
 
 DciSchema.plugin(uniqueValidator);
-module.exports=model("admin",DciSchema)
+module.exports=model("dci",DciSchema)

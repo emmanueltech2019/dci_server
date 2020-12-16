@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt=require('jsonwebtoken');
 const {SECRET_KEY} =require("../config");
 const User = require('../models/user/User');
-
+const DciSchema =require('../models')
 
 
 exports.signup = (req, res, next) => {

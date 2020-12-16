@@ -27,6 +27,7 @@ connectmyDB=()=>{
 }
 connectmyDB()
 
+app.use("/",require("./routes"))
 app.use("/api/v1/user",require("./routes/User/Auth"))
 app.use("/api/v1/",require("./routes/investmentPlan/investment"))
 app.use("/api/v1/",require("./routes/investmentPlan/Transfer/Transfer"))
