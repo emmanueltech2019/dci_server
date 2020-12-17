@@ -7,7 +7,7 @@ const DciSchema = new Schema({
         default:0
     },
     LoanBalance:{
-        type:Number,
+        type:Number,x
         default:0    
     },
     investmentBalance:{
@@ -15,7 +15,7 @@ const DciSchema = new Schema({
         default:0    
     },
 
-},{ timestamps: true })
+},{ timestamps: true,capped : true, size:4000,  max : 1 })
 
 DciSchema.plugin(uniqueValidator);
 module.exports=model("dci",DciSchema)
