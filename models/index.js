@@ -3,11 +3,11 @@ const  uniqueValidator = require('mongoose-unique-validator');
 
 const DciSchema = new Schema({
     SavingsBalance:{
-        type:String,
+        type:Number,
         default:0
     },
     LoanBalance:{
-        type:String,
+        type:Number,
         default:0    
     },
     investmentBalance:{
