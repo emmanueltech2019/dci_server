@@ -19,10 +19,10 @@ exports.startapp =(req,res)=>{
 }
 exports.appdata =(req,res)=>{
     Dci.find({})
-    .then(res=>{
+    .then(response=>{
         res.status(200).json({
             message:"found ",
-            res
+            response
         })
     })
     .catch(err=>{
