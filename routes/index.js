@@ -1,4 +1,4 @@
-const { startapp } = require('../controllers')
+const { startapp,appdata} = require('../controllers')
 
 const router =require('express').Router()
 
