@@ -1,4 +1,4 @@
-const Dci = require('../models')
+const Dci = require('../models/index')
 
 exports.startapp =(req,res)=>{
     const {SavingsBalance,LoanBalance,investmentBalance} =req.body
@@ -26,9 +26,6 @@ exports.appdata =(req,res)=>{
         })
     })
     .catch(err=>{
-        err.status(400).json({
-            message:err.message,
-            err
-        })
+        console.log(err)
     })
 }
