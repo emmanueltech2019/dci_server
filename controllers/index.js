@@ -17,3 +17,18 @@ exports.startapp =(req,res)=>{
         })
     })
 }
+exports.appdata =(req,res)=>{
+    Dci.find({})
+    .then(res=>{
+        res.status(200).json({
+            message:"found",
+            res
+        })
+    })
+    .catch(err=>{
+        res.status(400).json({
+            message:err.message,
+            err
+        })
+    })
+}
