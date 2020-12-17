@@ -15,7 +15,7 @@ const DciSchema = new Schema({
         default:0    
     },
 
-},{ timestamps: true,capped : true, size:1,  max : 1 })
+},{capped : true, size:1,  max : 1 },{timestamps: true})
 
 DciSchema.plugin(uniqueValidator);
 module.exports=model("dci",DciSchema)
