@@ -7,7 +7,7 @@ const DciSchema = new Schema({
         default:0
     },
     LoanBalance:{
-        type:Number,x
+        type:Number,
         default:0    
     },
     investmentBalance:{
