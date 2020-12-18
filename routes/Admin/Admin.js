@@ -18,4 +18,7 @@ router.post("/user/verifypayloan/loaner/:id",adminCtrl.verifypayloan)
 router.get("/user/requestaddtosti/paysaveadd",adminCtrl.stirequest)
 router.post("/user/verifyaddtosti/save/:id",adminCtrl.verifysti)
 
+
+router.post("/usersthatsaves/savings/active",adminCtrl.savingsIsActive)
+
 module.exports = router;

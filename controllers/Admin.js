@@ -177,6 +177,12 @@ exports.PendingSaveAdd=(req,res)=>{
     res.send(response)
   })
 }
+exports.savingsIsActive=(req,res)=>{
+  User.find({SavingsActive:true})
+  .then(response=>{
+    res.send(response)
+  })
+}
 exports.verifysavings=(req,res)=>{
   const {amount} =req.body
   User.findOneAndUpdate({_id:req.params.id},{ SavingsActive:true,AddSaveRequest:false})
