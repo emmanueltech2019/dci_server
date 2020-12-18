@@ -138,7 +138,7 @@ exports.verifyinvestor=(req,res)=>{
    user.investmentStartDate=new Date(),
 
    user.investmentNextPayDate=addMonths(new Date(year,month,day),interval).toString()
-    Dci.findById({_id:"5fdbbe15a1960c00176fc3ed"},(err,appdata)=>{
+    Dci.findById({_id:"5fdba26ebc903b00170202aa"},(err,appdata)=>{
 
       appdata.investmentBalance+parseInt(user.planDetails.planPrice)
       appdata.save()
