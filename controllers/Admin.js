@@ -188,6 +188,7 @@ exports.verifysavings=(req,res)=>{
   User.findOneAndUpdate({_id:req.params.id},{ SavingsActive:true,AddSaveRequest:false})
   .then(response=>{
     response.savingBalance=response.savingBalance+amount
+    response.SavingsActive=true
     user.save(response1=>{
       res.json({
         response,
