@@ -69,7 +69,8 @@ const AdminSchema = new Schema({
     },
     activityLogs:[
         {
-            type:Object
+            type:Object,
+            default:{}
         }
     ]
 
