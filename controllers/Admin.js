@@ -108,11 +108,12 @@ function addMonths(date, months) {
 }
 exports.verifyinvestor = (req, res) => {
   Admin.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.body.id },
     {
       $push: { activityLogs: req.body },
     },{ new: true },
     (err, admin) => {
+      console.log(admin)
       if (err) {
         res.status(400).json({
           message: "error occured or admin not found",
