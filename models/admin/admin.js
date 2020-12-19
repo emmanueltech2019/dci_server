@@ -69,13 +69,19 @@ const AdminSchema = new Schema({
     },
     activityLogs:[
         {
-            type:Object,
-            default:{}
-        }
+            type: Object,
+        } 
     ]
+    // activityLogs:[
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "Logs"
+    //     } 
+    // ]
 
 },{ timestamps: true })
 
-AdminSchema.plugin(uniqueValidator);
+const admin = AdminSchema.plugin(uniqueValidator);
+admin.aggregate([{ $count: "Logs" }]);
 module.exports=model("admin",AdminSchema);
 
