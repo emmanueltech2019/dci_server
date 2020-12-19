@@ -120,6 +120,7 @@ exports.verifyinvestor = (req, res) => {
           status: false,
         });
       } else {
+        admin.activityLogs.push(req.body)
         const d = new Date();
         const year = d.getFullYear();
         const month = d.getMonth();
