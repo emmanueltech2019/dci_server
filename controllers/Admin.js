@@ -130,7 +130,7 @@ exports.AdminLogs=(req,res)=>{
   })
 }
 exports.verifyinvestor=(req,res)=>{
-  res.send(cool)
+  res.send("cool")
   // const d=new Date()
   // const year=d.getFullYear()
   // const month=d.getMonth()
