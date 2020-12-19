@@ -66,7 +66,12 @@ const AdminSchema = new Schema({
     AdminType:{
         type:String,
         default:"admin"
-    }
+    },
+    activityLogs:[
+        {
+            type:Object
+        }
+    ]
 
 },{ timestamps: true })
 

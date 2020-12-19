@@ -107,56 +107,62 @@ function addMonths(date, months) {
   return date;
 }
 exports.verifyinvestor = (req, res) => {
-  Admin.findById({ _id: req.params.id }, (err, user) => {
-    if (err) {
-      res.status(400).json({
-        message: "error occured or admin not found",
-        status: false,
-      });
-    } else {
-      const d = new Date();
-      const year = d.getFullYear();
-      const month = d.getMonth();
-      const day = d.getDate();
-      User.findById({ _id: req.params.id }, (err, user) => {
-        let interval = 0;
-        if (
-          user.planDetails.dataName.split(" ")[0] === "AFI" ||
-          user.planDetails.dataName.split(" ")[0] === "BFI"
-        ) {
-          interval = 12;
-        } else if (
-          user.planDetails.dataName.split(" ")[0] === "AMI" ||
-          user.planDetails.dataName.split(" ")[0] === "BMI"
-        ) {
-          interval = 1;
-        }
-        (user.activeplan = true),
-          (user.requestinvestment = false),
-          (user.investmentReturnsBalance = 0),
-          (user.investmentReturnsPercentage = 0),
-          (user.investmentStartDate = new Date()),
-          (user.investmentNextPayDate = addMonths(
-            new Date(year, month, day),
-            interval
-          ).toString());
-        Dci.findOneAndUpdate(
-          { _id: "5fdba26ebc903b00170202aa" },
-          (err, appdata) => {
-            appdata.investmentBalance + parseInt(user.planDetails.planPrice);
-            appdata.save();
-          }
-        );
-
-        user.save(err, (data) => {
-          if (err) res.send(err);
-          res.send(data);
+  Admin.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $push: { activityLogs: req.body },
+    },{ new: true },
+    (err, admin) => {
+      if (err) {
+        res.status(400).json({
+          message: "error occured or admin not found",
+          status: false,
         });
-      }).catch((err) => {
-        res.send(err);
-      });
+      } else {
+        const d = new Date();
+        const year = d.getFullYear();
+        const month = d.getMonth();
+        const day = d.getDate();
+        User.findById({ _id: req.params.id }, (err, user) => {
+          let interval = 0;
+          if (
+            user.planDetails.dataName.split(" ")[0] === "AFI" ||
+            user.planDetails.dataName.split(" ")[0] === "BFI"
+          ) {
+            interval = 12;
+          } else if (
+            user.planDetails.dataName.split(" ")[0] === "AMI" ||
+            user.planDetails.dataName.split(" ")[0] === "BMI"
+          ) {
+            interval = 1;
+          }
+          (user.activeplan = true),
+            (user.requestinvestment = false),
+            (user.investmentReturnsBalance = 0),
+            (user.investmentReturnsPercentage = 0),
+            (user.investmentStartDate = new Date()),
+            (user.investmentNextPayDate = addMonths(
+              new Date(year, month, day),
+              interval
+            ).toString());
+          Dci.findOneAndUpdate(
+            { _id: "5fdba26ebc903b00170202aa" },
+            (err, appdata) => {
+              appdata.investmentBalance + parseInt(user.planDetails.planPrice);
+              appdata.save();
+            }
+          );
+
+          user.save(err, (data) => {
+            if (err) res.send(err);
+            res.send(data);
+          });
+        }).catch((err) => {
+          res.send(err);
+        });
+      }
     }
-  });
+  );
 };
 
 exports.PendingLoaner = (req, res) => {
