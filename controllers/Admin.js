@@ -110,7 +110,7 @@ exports.verifyinvestor = (req, res) => {
   Admin.findById({ _id: req.body.id }, (err, admin) => {
     if (err) {
       res.status(400).json({
-        message: "error occured or user not found",
+        message: "error occured or admin not found",
         status: false,
       });
     } else {
