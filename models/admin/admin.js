@@ -82,6 +82,6 @@ const AdminSchema = new Schema({
 },{ timestamps: true })
 
 const admin = AdminSchema.plugin(uniqueValidator);
-admin.aggregate([{ $count: "Logs" }]);
+// admin.aggregate([{ $count: "Logs" }]);
 module.exports=model("admin",AdminSchema);
 
