@@ -2,7 +2,6 @@ const User = require('../models/user/User')
 
 
 exports.loandets=(req,res)=>{
-    // const {Lamount,Luse,Lemployer,Lincome,Ltype} =req.body
     User.findByIdAndUpdate({_id:req.params.id},{loandets:req.body},(err,user)=>{
         if(err){
             res.send(err)
@@ -17,7 +16,6 @@ exports.loandets=(req,res)=>{
     })
 }
 exports.loandocs=(req,res)=>{
-    // const {Lamount,Luse,Lemployer,Lincome,Ltype} =req.body
     User.findByIdAndUpdate({_id:req.params.id},{loandocs:req.body},(err,user)=>{
         if(err){
             res.send(err)

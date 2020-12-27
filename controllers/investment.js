@@ -99,7 +99,7 @@ exports.pickedplan=(req,res,next)=>{
 }
 
 exports.payment=(req,res,next)=>{
-    let APIKEY ="sk_test_876a88ad79c77f3336551a0e4815efffc68440d0"
+    let APIKEY =process.env.TESTPAYMENTKEY
     const environment = process.env.NODE_ENV
     const paystack = new PayStack(APIKEY, environment)
     const amount =req.body.amount*100

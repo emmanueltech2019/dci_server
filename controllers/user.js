@@ -86,124 +86,7 @@ exports.verify=(req,res,next)=>{
       }
     }
   })();
-  // nodeMailer.createTestAccount((err, account) => {
-  //   if (err) {
-  //       console.error('Failed to create a testing account. ' + err.message);
-  //       return process.exit(1);
-  //   }
 
-  //   console.log('Credentials obtained, sending message...');
-
-    // Create a SMTP transporter object
-    // let transporter = nodeMailer.createTransport({
-    //     host: account.smtp.host,
-    //     port: account.smtp.port,
-    //     secure: account.smtp.secure,
-    //     auth: {
-    //         user: account.user,
-    //         pass: account.pass
-    //     },
-    //     tls: {
-    //         rejectUnauthorized: false
-    //     }
-    // });
-
-    // Message object
-    // let message = {
-    //     from: 'Sender Name <sender@example.com>',
-    //     to: req.body.email,
-    //     subject: 'Nodemailer is unicode friendly ✔',
-    //     text: 'Hello to myself!',
-    //     html: '<p><b>Hello</b> to myself!</p>'
-    // };
-
-    // transporter.sendMail(message, (err, info) => {
-    //     if (err) {
-    //         console.log('Error occurred. ' + err.message);
-    //         return process.exit(1);
-    //     }
-
-    //     console.log('Message sent: %s', info.messageId);
-    //     // Preview only available when sending through an Ethereal account
-    //     res.send('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-//     });
-// });
-
-  // let accesscode =securePin.generatePinSync(4);
-  // let transporter = nodeMailer.createTransport({
-  //   service:"gmail",
-  //   auth:{
-  //     user: 'emmanueltech2019@gmail.com',
-  //     pass: 'emmanuellucky2020password'
-  //   }
-  // })
-//   let testAccount = nodeMailer.createTestAccount();
-//   const transporter = nodeMailer.createTransport({
-//     host: 'smtp.ethereal.email',
-//     port: 587,
-//     secure: false,
-//     auth: {
-//         user: 'chelsey.auer28@ethereal.email',
-//         pass: 'EddbWB6h1HrgaJ98Ky'
-//     },
-//     tls: {
-//       rejectUnauthorized: false
-//   }
-
-// });
-//   template=(`<h1>thats your verification code</h1><br/><h3>${accesscode}<h3/>`)
-//   let mailOptions = {
-//       from:"double coin",
-//       to:req.body.email,
-//       subject:"Verification code from double coin registration",
-//       html:template
-//   }
-
-//   transporter.sendMail(mailOptions,function(err,data) {
-//     if(err){
-//       console.log("error occurs")
-//       console.log(err)
-//     }
-//     else{
-//       console.log("sent")
-//     }
-    
-//     User.findOneAndUpdate({email:req.body.email},{accesscode},(err,user)=>{
-//       if(err) throw err
-//       res.send(user)
-//     })
-//   })
-
-      // let transporter = nodeMailer.createTransport({
-      //   host: "dci.ng",
-      //   port:  995,
-      //   secure: true,
-      //   auth: {
-            // should be replaced with real sender's account
-            // user: 'emmanueltech2019@gmail.com',
-            // pass: 'emmanueltech2020.com'
-    //         user: 'admin@dci.ng',
-    //         pass: "247$Admin"
-    //     },
-    //     tls:{
-    //         rejectUnauthorized:false
-    //     }
-    // });
-    // let mailOptions = {
-        // should be replaced with real recipient's account
-    //     to: req.body.email,
-    //     subject: req.body.subject,
-    //     text: req.body.message
-    // };
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //   if (error) {
-    //     return res.json({error: true});
-    // }
-    // console.log('Message %s sent: %s', info.messageId, info.response);
-    // res.json({done: true});
-    // });
-    // res.writeHead(301, { Location: 'index.html' });
-    // res.end("sent");
 
 }
 exports.getverified=(req,res,next)=>{
@@ -269,14 +152,8 @@ exports.login=(req,res,next)=>{
                  status:false,
              });
         }
-        const token = jwt.sign({ id: user._id }, SECRET_KEY, {expiresIn: "86400s"});
-        // const token = jwt.sign({ id: user._id },
-        //    SECRET_KEY, { algorithm: 'RS256' },(err, token) =>{
-        //      if (err) {
-        //        console.log(err)
-        //      }
-        //   console.log(token);
-        // });
+        const token = jwt.sign({ id: user._id }, SECRET_KEY, {expiresIn: "1h"});
+
 
         res.status(200).json({
         user,
@@ -315,7 +192,6 @@ exports.updateDetails1=(req,res,next)=>{
         status:true
       })
     })
-
 }
 exports.updateDetails2=(req,res,next)=>{
     const {referralsId,referralsName,identificationMeans,identificationNo,nameOfOrgnisation,lga,stateOfOrigin,idimage} =req.body;
