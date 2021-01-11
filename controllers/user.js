@@ -82,14 +82,9 @@ exports.verify = async (req, res, next) => {
       html: `<h1>Your DCi verification code </h1>:<h2>${accesscode}</h2><br/>`, // html body
     })
     .then((response) => {
-      User.findOne({email:req.body.email},(err,user)=>{
+      User.findOneAndUpdate({email:req.body.email,},{accesscode},(err,user)=>{
         if(err) res.status(404).json(err)
-        
-        user.accesscode ? user.accesscode = accesscode:null;
-        user.save().then(doneData=>{
-
-          res.status(200).json({ message: "Sent",user,accesscode });
-        })
+        res.status(200).json({ message: "Sent",user,accesscode });
       })
     })
     .catch((error) => {
