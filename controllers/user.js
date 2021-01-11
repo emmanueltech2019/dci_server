@@ -54,7 +54,6 @@ exports.updatePersonalDetails = (req, res, next) => {
 };
 
 exports.verify = async (req, res, next) => {
-  // User.find()
   const accesscode = securePin.generatePinSync(4);
  
   const nodemailer = require("nodemailer");
@@ -87,8 +86,10 @@ exports.verify = async (req, res, next) => {
         if(err) res.status(404).json(err)
         
         user.accesscode ? user.accesscode = accesscode:null;
-        user.save();
-        res.status(200).json({ message: "Sent",user,accesscode });
+        user.save().then(doneData=>{
+
+          res.status(200).json({ message: "Sent",user,accesscode });
+        })
       })
     })
     .catch((error) => {
