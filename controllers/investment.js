@@ -102,12 +102,12 @@ exports.payment=(req,res,next)=>{
     let APIKEY =process.env.TESTPAYMENTKEY
     const environment = process.env.NODE_ENV
     const paystack = new PayStack(APIKEY, environment)
-    const amount =req.body.amount*100
+    const amount =parseInt(req.body.amount*100)
     const paystckpayment = paystack.initializeTransaction({
         amount,
         email: req.body.email,
     })
-       console.log(amount)
+       console.log(amount,email)
     paystckpayment
     .then(function (response){
     res.json({
@@ -115,7 +115,7 @@ exports.payment=(req,res,next)=>{
         response
     }) 
     }).catch(function (error){
-    res.send(error)
+    res.json({error,message:"payment failed"})
     })
 }
 
