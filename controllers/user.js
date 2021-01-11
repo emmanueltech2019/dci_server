@@ -92,7 +92,7 @@ exports.verify = async (req, res, next) => {
     })
     .catch((error) => {
         res.json({
-          message: "error occured",
+          message: "error occured!",
           message1: error,
         });
 
