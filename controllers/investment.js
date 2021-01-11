@@ -103,7 +103,6 @@ exports.payment=(req,res,next)=>{
     const environment = process.env.NODE_ENV
     const paystack = new PayStack(APIKEY, environment)
     const amount =req.body.amount*100
-    console.log(req.body.amount)
     const paystckpayment = paystack.initializeTransaction({
         amount,
         email: req.body.email,
@@ -112,7 +111,8 @@ exports.payment=(req,res,next)=>{
     paystckpayment
     .then(function (response){
     res.json({
-        data:response.body.data.authorization_url
+        data:response.body.data.authorization_url,
+        response
     }) 
     }).catch(function (error){
     res.send(error)
