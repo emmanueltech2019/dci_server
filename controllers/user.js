@@ -8,6 +8,7 @@ const { SEND_GRID_API_KEY } = require("../config");
 require("dotenv").config();
 const { SECRET_KEY } = require("../config");
 const { response } = require("express");
+var smtpTransport = require('nodemailer-smtp-transport');
 exports.alluser = (req, res, next) => {
   User.find({}, (err, user) => {
     res.send(user);
@@ -57,7 +58,7 @@ exports.verify = async (req, res, next) => {
   const accesscode = securePin.generatePinSync(4);
  
   const nodemailer = require("nodemailer");
-  let transporter = nodemailer.createTransport({
+  let transporter = nodemailer.createTransport(smtpTransport({
     host: "mail.dci.ng",
     port: 587,
     secure: false, // true for 465, false for other ports
@@ -71,7 +72,7 @@ exports.verify = async (req, res, next) => {
       // do not fail on invalid certs
       rejectUnauthorized: false,
     },
-  });
+  }));
 
   let info = await transporter
     .sendMail({
