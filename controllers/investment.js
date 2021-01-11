@@ -107,7 +107,7 @@ exports.payment=(req,res,next)=>{
         amount,
         email: req.body.email,
     })
-       console.log(amount,email)
+       console.log(amount,req.body.email)
     paystckpayment
     .then(function (response){
     res.json({
