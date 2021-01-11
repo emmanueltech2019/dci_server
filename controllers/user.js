@@ -84,18 +84,18 @@ exports.verify = async (req, res, next) => {
     .then((response) => {
       User.findOne({email:req.body.email},(err,user)=>{
         if(err) res.status(404).json(err)
+        
         user.accesscode ? user.accesscode = accesscode:null;
         user.save();
         res.status(200).json({ message: "Sent",user,accesscode });
       })
     })
     .catch((error) => {
-      if (error.response) {
         res.json({
           message: "error occured",
           message1: error,
         });
-      }
+
     });
   
 };

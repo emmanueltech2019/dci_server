@@ -1,21 +1,15 @@
 const Dci = require('../models/index')
+const User = require('../models/user/User')
+const Admin = require('../models/admin/admin')
 
-exports.startapp =(req,res)=>{
-    const {SavingsBalance,LoanBalance,investmentBalance} =req.body
-    const generalData = new Dci({
-        SavingsBalance,
-        LoanBalance,
-        investmentBalance
-    })
-    generalData.save((err,data)=>{
-        if(err){
-            res.send(err)
-        }
-        res.status(201).json({
-            message:"Created",
-            data
-        })
-    })
+exports.updateProfile =(req,res)=>{
+    const {type} =req.body
+    if(req.body.type==="user"){
+        User.findOneAndUpdate({_id:req.params.id},{occupation,phonenumber,ResidentialAddress,NearestBusStop,CityTown,State})
+    }
+    if(req.body.type==="admin"){
+
+    }
 }
 exports.appdata =(req,res)=>{
     Dci.find({})

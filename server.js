@@ -22,6 +22,7 @@ connectmyDB=()=>{
     })
     .catch(err=>{
         console.log("Error connecting to Db")
+        console.log(err)
         connectmyDB()
     })
 }
