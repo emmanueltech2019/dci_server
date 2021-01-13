@@ -1,6 +1,8 @@
 const {Schema,model} = require("mongoose")
 const  uniqueValidator = require('mongoose-unique-validator');
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const AdminSchema = new Schema({
     email:{
         type:String,
@@ -28,6 +30,9 @@ const AdminSchema = new Schema({
         required:true,
         trim:true
     },
+    image:{
+        type:String,
+    },
     town:{
         type:String,
         required:true,
@@ -47,6 +52,9 @@ const AdminSchema = new Schema({
         type:String,
         required:true,
         trim:true
+    },
+    stateOfOrigin:{
+        type:String,
     },
     idNumber:{
         type:String,
@@ -71,7 +79,16 @@ const AdminSchema = new Schema({
         {
             type: Object,
         } 
-    ]
+    ],
+    resetPasswordToken: {
+        type: String,
+        required: false
+    },
+
+    resetPasswordExpires: {
+        type: Date,
+        required: false
+    }
     // activityLogs:[
     //     {
     //         type: Schema.Types.ObjectId,
@@ -80,6 +97,13 @@ const AdminSchema = new Schema({
     // ]
 
 },{ timestamps: true })
+
+
+AdminSchema.methods.generatePasswordReset = function() {
+    this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+    this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+};
+
 
 AdminSchema.plugin(uniqueValidator);
 module.exports=model("admin",AdminSchema);

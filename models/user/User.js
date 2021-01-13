@@ -1,6 +1,8 @@
 const {model,Schema} =require("mongoose");
 const  uniqueValidator = require('mongoose-unique-validator');
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const UserSchema = new Schema({
     fullname:{
@@ -181,7 +183,22 @@ const UserSchema = new Schema({
     investmentMonths:{
         type:Number,
         default:0
+    },
+    resetPasswordToken: {
+        type: String,
+        required: false
+    },
+
+    resetPasswordExpires: {
+        type: Date,
+        required: false
     }
 },{timestamp:true})
+
+
+UserSchema.methods.generatePasswordReset = function() {
+    this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+    this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+};
 UserSchema.plugin(uniqueValidator);
 module.exports=model("User",UserSchema)
