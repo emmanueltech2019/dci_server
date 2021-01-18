@@ -153,7 +153,7 @@ exports.verifyinvestor = (req, res) => {
           }
           else if(user.investmentCount<1 && user.referralsId){
           user.investmentCount=user.investmentCount+1
-
+            console.log(user.referralsId)
           User.findOne({referralsId:user.referralsId})
           .then(reffereduser=>{
             const amount = parseInt(user.planDetails.dataPrice)
