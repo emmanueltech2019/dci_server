@@ -164,15 +164,15 @@ exports.verifyinvestor = (req, res) => {
                   err,
                 });
               }
-              (user.activeplan = true),
-                (user.requestinvestment = false),
-                (user.investmentReturnsBalance = 0),
-                (user.investmentReturnsPercentage = 0),
-                (user.investmentStartDate = new Date()),
-                (user.investmentNextPayDate = addMonths(
-                  new Date(year, month, day),
-                  interval
-                ).toString());
+              user.activeplan = true;
+              user.requestinvestment = false;
+              user.investmentReturnsBalance = 0;
+              user.investmentReturnsPercentage = 0;
+              user.investmentStartDate = new Date();
+              user.investmentNextPayDate = addMonths(
+                new Date(year, month, day),
+                interval
+              ).toString();
               const amount = parseInt(user.planDetails.dataPrice);
               const percentageValue = 5;
               const ammountForRefer = percentage(amount, percentageValue);
