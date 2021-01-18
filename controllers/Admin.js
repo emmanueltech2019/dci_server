@@ -7,8 +7,9 @@ const Dci = require("../models/index");
 const smtpTransport = require("nodemailer-smtp-transport");
 require("dotenv").config();
 
-function percentage(partialValue, totalValue) {
-  return (100 * partialValue) / totalValue;
+function percentage(num, per)
+{
+  return (num/100)*per;
 }
 
 exports.signup = (req, res, next) => {
@@ -164,7 +165,7 @@ exports.verifyinvestor = (req, res) => {
             }
             const amount = parseInt(user.planDetails.dataPrice);
               const percentageValue = 5;
-              const ammountForRefer = percentage(percentageValue, amount);
+              const ammountForRefer = percentage( amount,percentageValue);
               console.log(amount,ammountForRefer,percentageValue)
               reffereduser.referralsEarning =
               reffereduser.referralsEarning + ammountForRefer;
