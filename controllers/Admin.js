@@ -163,8 +163,8 @@ exports.verifyinvestor = (req, res) => {
                 err,
               });
             }
-            console.log("user",user)
-            console.log("reffereduser",reffereduser)
+            console.log("user",user.email)
+            console.log("reffereduser",reffereduser.email)
             const amount = parseInt(user.planDetails.dataPrice);
               const percentageValue = 5;
               const ammountForRefer = percentage( amount,percentageValue);
