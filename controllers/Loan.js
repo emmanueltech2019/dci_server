@@ -75,6 +75,7 @@ exports.loandciinvestor=(req,res,next)=>{
     })
 }
 exports.loanactivate=(req,res,next)=>{
+    
     Admin.findById({ _id: req.body.admin._id }, (err, admin) => {
         if (err) {
           res.status(400).json({
