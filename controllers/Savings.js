@@ -1,4 +1,5 @@
 const User = require("../models/user/User");
+const Admin = require("../models/admin/admin");
 let PayStack = require("paystack-node");
 require("dotenv").config();
 exports.payment = (req, res, next) => {
