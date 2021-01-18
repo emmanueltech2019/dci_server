@@ -293,3 +293,4 @@ exports.deleteaccount = (req, res, next) => {
     res.send("Deleted successfully!");
   });
 };
+

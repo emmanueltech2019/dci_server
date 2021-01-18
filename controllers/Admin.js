@@ -4,6 +4,12 @@ const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
 const User = require("../models/user/User");
 const Dci = require("../models/index");
+const smtpTransport = require('nodemailer-smtp-transport');
+require('dotenv').config()
+
+function percentage(partialValue, totalValue) {
+  return (100 * partialValue) / totalValue;
+}
 
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then((hash) => {
@@ -114,8 +120,7 @@ exports.verifyinvestor = (req, res) => {
         status: false,
       });
     } else {
-      admin.activityLogs.push(req.body);
-      admin.save();
+      
       const d = new Date();
       const year = d.getFullYear();
       const month = d.getMonth();
@@ -133,20 +138,41 @@ exports.verifyinvestor = (req, res) => {
         ) {
           interval = 1;
         }
-        (user.activeplan = true),
-          (user.requestinvestment = false),
-          (user.investmentReturnsBalance = 0),
-          (user.investmentReturnsPercentage = 0),
-          (user.investmentStartDate = new Date()),
-          (user.investmentNextPayDate = addMonths(
-            new Date(year, month, day),
-            interval
-          ).toString());
-        Dci.findById({ _id: "5fdba26ebc903b00170202aa" }, (err, appdata) => {
-          appdata.investmentBalance + parseInt(user.planDetails.planPrice);
-          appdata.save();
-        });
+        if(user.investmentCount >=1){
+          user.investmentCount=user.investmentCount+1
+          (user.activeplan = true),
+            (user.requestinvestment = false),
+            (user.investmentReturnsBalance = 0),
+            (user.investmentReturnsPercentage = 0),
+            (user.investmentStartDate = new Date()),
+            (user.investmentNextPayDate = addMonths(
+              new Date(year, month, day),
+              interval
+            ).toString());
+          }
+          else if(user.investmentCount<1 && user.referralsId){
+          user.investmentCount=user.investmentCount+1
 
+          User.findOne({referralsId:user.referralsId})
+          .then(reffereduser=>{
+            const amount = parseInt(user.planDetails.dataPrice)
+            const percentageValue = 5
+            const ammountForRefer = percentage(percentageValue,amount) 
+            reffereduser.referralsEarning=reffereduser.referralsEarning+ammountForRefer
+            reffereduser.push(user)
+            reffereduser.save()
+          })
+          .catch(err=>{
+            return res.status(404).json({
+              message:`Wrong refferal code ,please contact the user on ${user.email}
+               to collect correct refferral code and edit the users account to add 
+               correct code and proceed`,
+               err
+            })
+          })
+        }
+        admin.activityLogs.push(req.body);
+        admin.save();
         user.save((err, data) => {
           if (err) res.send(err);
           res.send(data);
@@ -244,6 +270,65 @@ exports.verifysti = (req, res) => {
           amount,
         });
       });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+
+
+
+exports.newUsers = (req, res) => {
+  User.find({ approvedUser:false })
+  .then((response) => {
+    res.send(response);
+  });
+};
+
+exports.approveNewUser =  (req, res) => {
+  const {email} =req.body
+  User.findOneAndUpdate({ _id: req.params.id }, { approvedUser: true })
+    .then((response) => {
+      const sendmail = async ()=>{
+        
+        const nodemailer = require("nodemailer");
+        let transporter = nodemailer.createTransport(smtpTransport({
+          host: "mail.dci.ng",
+          port: 587,
+          secure: false, // true for 465, false for other ports
+          auth: {
+            user: process.env.NODEMAILER_USERNAME, // generated ethereal user
+            pass: process.env.NODEMAILER_PASSWORD, // generated ethereal password
+          },
+          connectionTimeout: 5 * 60 * 1000, // 5 min
+      
+          tls: {
+            // do not fail on invalid certs
+            rejectUnauthorized: false,
+          },
+        }));
+      
+        let info = await transporter
+          .sendMail({
+            from: '"DCI" <info@dci.ng>', // sender address
+            to: req.body.email, // list of receivers
+            subject: "Account Activated Successfully", // Subject line
+            text: "", // plain text body
+            html: `<h1>You DCI Account Has Been Successfully Activated You Can Now Login</h1>`, // html body
+          })
+          .then((response) => {
+            res.send(response);
+           
+          })
+          .catch((error) => {
+              res.json({
+                message: "error occured!",
+                message1: error,
+              });
+      
+          });
+      }
+      sendmail()
     })
     .catch((err) => {
       res.send(err);

@@ -2,7 +2,7 @@ const {Schema,model} = require("mongoose")
 const  uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
+const crypto = require('crypto-extra');
 const AdminSchema = new Schema({
     email:{
         type:String,
@@ -100,7 +100,7 @@ const AdminSchema = new Schema({
 
 
 AdminSchema.methods.generatePasswordReset = function() {
-    this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+    this.resetPasswordToken = crypto.randomString().toString('hex');
     this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
 };
 
