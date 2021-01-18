@@ -157,7 +157,40 @@ exports.verifyinvestor = (req, res) => {
           user.investmentCount = user.investmentCount + 1;
           Admin.find({ accesscode: user.referralsId },(err,users)=>{
             if(users.length >=1){
-              console.log("Admin ohhhhhh")
+              Admin.findOne(
+                { accesscode: user.referralsId },
+                (err, reffereduser) => {
+                  if (err) {
+                    return res.status(404).json({
+                      message: `Wrong refferal code ,please contact the user on ${user.email}
+                   to collect correct refferral code and edit the users account to add 
+                   correct code and proceed`,
+                      err,
+                    });
+                  }
+                  user.activeplan = true;
+                  user.requestinvestment = false;
+                  user.investmentReturnsBalance = 0;
+                  user.investmentReturnsPercentage = 0;
+                  user.investmentStartDate = new Date();
+                  user.investmentNextPayDate = addMonths(
+                    new Date(year, month, day),
+                    interval
+                  ).toString();
+                  const amount = parseInt(user.planDetails.dataPrice);
+                  const percentageValue = 5;
+                  const ammountForRefer = percentage(amount, percentageValue);
+                  console.log(amount, ammountForRefer, percentageValue);
+                  reffereduser.referralsEarning =
+                    reffereduser.referralsEarning + ammountForRefer;
+                  reffereduser.referralsUsers.push(user);
+                  reffereduser.save();
+                }
+              );
+              user.save((err, data) => {
+                if (err) res.send(err);
+                res.send(data);
+              });
             }
             else{
 
@@ -165,47 +198,47 @@ exports.verifyinvestor = (req, res) => {
           })
           User.find({ accesscode: user.referralsId },(err,users)=>{
             if(users.length >=1){
-              console.log("userohh ohhhhhh")
+              
+              User.findOne(
+                { accesscode: user.referralsId },
+                (err, reffereduser) => {
+                  if (err) {
+                    return res.status(404).json({
+                      message: `Wrong refferal code ,please contact the user on ${user.email}
+                   to collect correct refferral code and edit the users account to add 
+                   correct code and proceed`,
+                      err,
+                    });
+                  }
+                  user.activeplan = true;
+                  user.requestinvestment = false;
+                  user.investmentReturnsBalance = 0;
+                  user.investmentReturnsPercentage = 0;
+                  user.investmentStartDate = new Date();
+                  user.investmentNextPayDate = addMonths(
+                    new Date(year, month, day),
+                    interval
+                  ).toString();
+                  const amount = parseInt(user.planDetails.dataPrice);
+                  const percentageValue = 5;
+                  const ammountForRefer = percentage(amount, percentageValue);
+                  console.log(amount, ammountForRefer, percentageValue);
+                  reffereduser.referralsEarning =
+                    reffereduser.referralsEarning + ammountForRefer;
+                  reffereduser.referralsUsers.push(user);
+                  reffereduser.save();
+                }
+              );
+              user.save((err, data) => {
+                if (err) res.send(err);
+                res.send(data);
+              });
             }
             else{
               
             }
           })
-          User.findOne(
-            { accesscode: user.referralsId },
-            (err, reffereduser) => {
-              if (err) {
-                return res.status(404).json({
-                  message: `Wrong refferal code ,please contact the user on ${user.email}
-               to collect correct refferral code and edit the users account to add 
-               correct code and proceed`,
-                  err,
-                });
-              }
-              user.activeplan = true;
-              user.requestinvestment = false;
-              user.investmentReturnsBalance = 0;
-              user.investmentReturnsPercentage = 0;
-              user.investmentStartDate = new Date();
-              user.investmentNextPayDate = addMonths(
-                new Date(year, month, day),
-                interval
-              ).toString();
-              const amount = parseInt(user.planDetails.dataPrice);
-              const percentageValue = 5;
-              const ammountForRefer = percentage(amount, percentageValue);
-              console.log(amount, ammountForRefer, percentageValue);
-              reffereduser.referralsEarning =
-                reffereduser.referralsEarning + ammountForRefer;
-              reffereduser.referralsUsers.push(user);
-              reffereduser.save();
-            }
-          );
         }
-        user.save((err, data) => {
-          if (err) res.send(err);
-          res.send(data);
-        });
       }).catch((err) => {
         res.send(err);
       });
@@ -248,24 +281,36 @@ exports.savingsIsActive = (req, res) => {
   });
 };
 exports.verifysavings = (req, res) => {
-  const { amount } = req.body;
-  User.findOneAndUpdate(
-    { _id: req.params.id },
-    { SavingsActive: true, AddSaveRequest: false }
-  )
-    .then((response) => {
-      response.savingBalance = response.savingBalance + amount;
-      response.SavingsActive = true;
-      user.save((response1) => {
-        res.json({
-          response,
-          response1,
-        });
+  Admin.findById({ _id: req.body.admin._id }, (err, admin) => {
+    if (err) {
+      res.status(400).json({
+        message: "error occured or admin not found",
+        status: false,
       });
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+    } else {
+      admin.activityLogs.push(req.body);
+      admin.save();
+      const { amount } = req.body;
+      User.findOneAndUpdate(
+        { _id: req.body.user._id },
+        { SavingsActive: true, AddSaveRequest: false }
+      )
+        .then((response) => {
+          response.savingBalance = response.savingBalance + amount;
+          response.SavingsActive = true;
+          user.save((response1) => {
+            res.json({
+              response,
+              response1,
+              message:"Account Activated Successfully"
+            });
+          });
+        })
+        .catch((err) => {
+          res.send(err);
+        });
+    }
+  });
 };
 
 exports.PayLoan = (req, res) => {

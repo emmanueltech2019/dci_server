@@ -1,57 +1,36 @@
-const User = require("../models/user/User");
-const Admin = require("../models/admin/admin");
-let PayStack = require("paystack-node");
-require("dotenv").config();
-exports.payment = (req, res, next) => {
-  let APIKEY = process.env.TESTPAYMENTKEY;
-  const environment = process.env.NODE_ENV;
-  const paystack = new PayStack(APIKEY, environment);
-  const amount = req.body.amount * 100;
-  const paystckpayment = paystack.initializeTransaction({
-    amount,
-    email: req.body.email,
-  });
-  paystckpayment
-    .then(function (response) {
-      res.json({
-        data: response.body.data.authorization_url,
-      });
+const User = require("../models/user/User")
+let PayStack = require('paystack-node')
+require('dotenv').config()
+exports.payment=(req,res,next)=>{
+    let APIKEY =process.env.TESTPAYMENTKEY
+    const environment = process.env.NODE_ENV
+    const paystack = new PayStack(APIKEY, environment)
+    const amount =req.body.amount*100
+    const paystckpayment = paystack.initializeTransaction({
+        amount,
+        email: req.body.email,
     })
-    .catch(function (error) {
-      res.send(error);
-    });
-};
+    paystckpayment
+    .then(function (response){
+    res.json({
+        data:response.body.data.authorization_url
+    }) 
+    }).catch(function (error){
+    res.send(error)
+    })
+}
 
-exports.addTosavings = (req, res, next) => {
-  Admin.findById({ _id: req.body.admin._id }, (err, admin) => {
-    if (err) {
-      res.status(400).json({
-        message: "error occured or admin not found",
-        status: false,
-      });
-    } else {
-      admin.activityLogs.push(req.body);
-      admin.save();
-      const { amount } = req.body;
-      User.findOneAndUpdate(
-        { _id: req.body.user._id },
-        { SavingsActive: true, AddSaveRequest: false }
-      )
-        .then((response) => {
-          response.savingBalance = response.savingBalance + amount;
-          response.SavingsActive = true;
-          user.save((response1) => {
+
+exports.addTosavings=(req,res,next)=>{
+    User.findOneAndUpdate({_id:req.params.id},{savingDets:req.body,AddSaveRequest:true},(err,user)=>{
+        if(err){
+            res.send(err)
+        }
+        else{
             res.json({
-              response,
-              response1,
-              message:"Account Activated Successfully"
-            });
-          });
-        })
-        .catch((err) => {
-          res.send(err);
-        });
-    }
-  });
-  
-};
+                user
+            })
+        }
+    })
+}
+
