@@ -91,7 +91,16 @@ const AdminSchema = new Schema({
     },
     accesscode:{
         type:String
-    }
+    },
+    referralsEarning:{
+        type:Number,
+        default:0
+    },
+    referralsUsers:[
+        {
+            type:Object,
+        }
+    ],
     // activityLogs:[
     //     {
     //         type: Schema.Types.ObjectId,
