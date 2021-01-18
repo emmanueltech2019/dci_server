@@ -120,7 +120,8 @@ exports.verifyinvestor = (req, res) => {
         status: false,
       });
     } else {
-      
+      admin.activityLogs.push(req.body);
+      admin.save();
       const d = new Date();
       const year = d.getFullYear();
       const month = d.getMonth();
@@ -171,8 +172,6 @@ exports.verifyinvestor = (req, res) => {
             })
           })
         }
-        admin.activityLogs.push(req.body);
-        admin.save();
         user.save((err, data) => {
           if (err) res.send(err);
           res.send(data);
