@@ -138,7 +138,6 @@ exports.resetpassword = (req, res) => {
         });
       }
       user.generatePasswordReset();
-      console.log("got here");
       user.save().then((user) => {
         let link =
           "http://" +

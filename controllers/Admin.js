@@ -161,7 +161,6 @@ exports.verifyinvestor = (req, res) => {
         } else if (user.investmentCount < 1 && user.referralsId) {
           user.investmentCount = user.investmentCount + 1;
           Admin.find({ accesscode: user.referralsId },(err,users)=>{
-            console.log(users,err)
             if(err) return res.status(404).json(err)
             if(users.length >=1){
               Admin.findOne(
@@ -187,7 +186,6 @@ exports.verifyinvestor = (req, res) => {
                   const amount = parseInt(user.planDetails.dataPrice);
                   const percentageValue = 5;
                   const ammountForRefer = percentage(amount, percentageValue);
-                  console.log(amount, ammountForRefer, percentageValue);
                   reffereduser.referralsEarning =
                     reffereduser.referralsEarning + ammountForRefer;
                   reffereduser.referralsUsers.push(user);
@@ -204,7 +202,6 @@ exports.verifyinvestor = (req, res) => {
             }
           })
           User.find({ accesscode: user.referralsId },(err,users)=>{
-            console.log(users,err)
             if(err) return res.status(404).json(err)
             if(users.length >=1){
               
@@ -231,7 +228,6 @@ exports.verifyinvestor = (req, res) => {
                   const amount = parseInt(user.planDetails.dataPrice);
                   const percentageValue = 5;
                   const ammountForRefer = percentage(amount, percentageValue);
-                  console.log(amount, ammountForRefer, percentageValue);
                   reffereduser.referralsEarning =
                     reffereduser.referralsEarning + ammountForRefer;
                   reffereduser.referralsUsers.push(user);
