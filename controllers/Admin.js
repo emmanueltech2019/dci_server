@@ -117,6 +117,7 @@ function addMonths(date, months) {
 }
 exports.verifyinvestor = (req, res) => {
   Admin.findById({ _id: req.body.id }, (err, admin) => {
+
     if (err) {
       res.status(400).json({
         message: "error occured or admin not found",
@@ -156,6 +157,8 @@ exports.verifyinvestor = (req, res) => {
         } else if (user.investmentCount < 1 && user.referralsId) {
           user.investmentCount = user.investmentCount + 1;
           Admin.find({ accesscode: user.referralsId },(err,users)=>{
+            console.log(users,err)
+            if(err) return res.status(404).json(err)
             if(users.length >=1){
               Admin.findOne(
                 { accesscode: user.referralsId },
@@ -197,6 +200,8 @@ exports.verifyinvestor = (req, res) => {
             }
           })
           User.find({ accesscode: user.referralsId },(err,users)=>{
+            console.log(users,err)
+            if(err) return res.status(404).json(err)
             if(users.length >=1){
               
               User.findOne(
