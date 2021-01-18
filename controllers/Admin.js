@@ -126,7 +126,7 @@ exports.verifyinvestor = (req, res) => {
       const year = d.getFullYear();
       const month = d.getMonth();
       const day = d.getDate();
-      User.findById({ _id: req.params.id }, (err, user) => {
+      User.findById({ _id: req.body.user._id }, (err, user) => {
         let interval = 0;
         if (
           user.planDetails.dataName.split(" ")[0] === "AFI" ||
