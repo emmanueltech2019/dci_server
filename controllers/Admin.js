@@ -154,6 +154,10 @@ exports.verifyinvestor = (req, res) => {
               new Date(year, month, day),
               interval
             ).toString());
+            user.save((err, data) => {
+              if (err) res.send(err);
+              res.send(data);
+            });
         } else if (user.investmentCount < 1 && user.referralsId) {
           user.investmentCount = user.investmentCount + 1;
           Admin.find({ accesscode: user.referralsId },(err,users)=>{
@@ -240,7 +244,7 @@ exports.verifyinvestor = (req, res) => {
               });
             }
             else{
-              
+             
             }
           })
         }
