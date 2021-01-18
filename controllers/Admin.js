@@ -153,7 +153,7 @@ exports.verifyinvestor = (req, res) => {
         } else if (user.investmentCount < 1 && user.referralsId) {
           user.investmentCount = user.investmentCount + 1;
           console.log(user.referralsId);
-          User.findOne({ referralsId: user.referralsId },(err,user)=>{
+          User.findOne({ referralsId: user.referralsId },(err,reffereduser)=>{
             if (err){
               return res.status(404).json({
                 message: `Wrong refferal code ,please contact the user on ${user.email}
