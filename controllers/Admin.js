@@ -167,7 +167,7 @@ exports.verifyinvestor = (req, res) => {
               const ammountForRefer = percentage(percentageValue, amount);
               reffereduser.referralsEarning =
                 reffereduser.referralsEarning + ammountForRefer;
-              reffereduser.push(user);
+              reffereduser.referralsUsers.push(user);
               reffereduser.save();
           })
         }
