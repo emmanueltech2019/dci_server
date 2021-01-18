@@ -7,9 +7,8 @@ const Dci = require("../models/index");
 const smtpTransport = require("nodemailer-smtp-transport");
 require("dotenv").config();
 
-function percentage(num, per)
-{
-  return (num/100)*per;
+function percentage(num, per) {
+  return (num / 100) * per;
 }
 
 exports.signup = (req, res, next) => {
@@ -154,26 +153,36 @@ exports.verifyinvestor = (req, res) => {
         } else if (user.investmentCount < 1 && user.referralsId) {
           user.investmentCount = user.investmentCount + 1;
           console.log(user.referralsId);
-          User.findOne({ accesscode: user.referralsId },(err,reffereduser)=>{
-            if (err){
-              return res.status(404).json({
-                message: `Wrong refferal code ,please contact the user on ${user.email}
+          User.findOne(
+            { accesscode: user.referralsId },
+            (err, reffereduser) => {
+              if (err) {
+                return res.status(404).json({
+                  message: `Wrong refferal code ,please contact the user on ${user.email}
                to collect correct refferral code and edit the users account to add 
                correct code and proceed`,
-                err,
-              });
-            }
-            console.log("user",user.email)
-            console.log("reffereduser",reffereduser.email)
-            const amount = parseInt(user.planDetails.dataPrice);
+                  err,
+                });
+              }
+              (user.activeplan = true),
+                (user.requestinvestment = false),
+                (user.investmentReturnsBalance = 0),
+                (user.investmentReturnsPercentage = 0),
+                (user.investmentStartDate = new Date()),
+                (user.investmentNextPayDate = addMonths(
+                  new Date(year, month, day),
+                  interval
+                ).toString());
+              const amount = parseInt(user.planDetails.dataPrice);
               const percentageValue = 5;
-              const ammountForRefer = percentage( amount,percentageValue);
-              console.log(amount,ammountForRefer,percentageValue)
+              const ammountForRefer = percentage(amount, percentageValue);
+              console.log(amount, ammountForRefer, percentageValue);
               reffereduser.referralsEarning =
-              reffereduser.referralsEarning + ammountForRefer;
+                reffereduser.referralsEarning + ammountForRefer;
               reffereduser.referralsUsers.push(user);
               reffereduser.save();
-          })
+            }
+          );
         }
         user.save((err, data) => {
           if (err) res.send(err);
