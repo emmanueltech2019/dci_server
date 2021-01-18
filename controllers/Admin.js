@@ -153,24 +153,23 @@ exports.verifyinvestor = (req, res) => {
         } else if (user.investmentCount < 1 && user.referralsId) {
           user.investmentCount = user.investmentCount + 1;
           console.log(user.referralsId);
-          User.findOne({ referralsId: user.referralsId })
-            .then((reffereduser) => {
-              const amount = parseInt(user.planDetails.dataPrice);
-              const percentageValue = 5;
-              const ammountForRefer = percentage(percentageValue, amount);
-              reffereduser.referralsEarning =
-                reffereduser.referralsEarning + ammountForRefer;
-              reffereduser.push(user);
-              reffereduser.save();
-            })
-            .catch((err) => {
+          User.findOne({ referralsId: user.referralsId },(err,user)=>{
+            if (err){
               return res.status(404).json({
                 message: `Wrong refferal code ,please contact the user on ${user.email}
                to collect correct refferral code and edit the users account to add 
                correct code and proceed`,
                 err,
               });
-            });
+            }
+            const amount = parseInt(user.planDetails.dataPrice);
+              const percentageValue = 5;
+              const ammountForRefer = percentage(percentageValue, amount);
+              reffereduser.referralsEarning =
+                reffereduser.referralsEarning + ammountForRefer;
+              reffereduser.push(user);
+              reffereduser.save();
+          })
         }
         user.save((err, data) => {
           if (err) res.send(err);
