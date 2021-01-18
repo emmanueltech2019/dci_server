@@ -1,4 +1,5 @@
 const User = require('../models/user/User')
+const Admin = require('../models/admin/admin')
 
 
 exports.loandets=(req,res)=>{
@@ -74,42 +75,53 @@ exports.loandciinvestor=(req,res,next)=>{
     })
 }
 exports.loanactivate=(req,res,next)=>{
-    User.findById({_id:req.params.id},(err,user)=>{
-        if(err){
-            res.send(err)
-        }
-        else{
-            
-            const dateOfLoan =new Date().toISOString().slice(0,10)
-            const Interval=parseInt(user.loandets.Interval) 
-            const d=new Date()
-            const year=d.getFullYear()
-            const month=d.getMonth()
-            const day=d.getDate()
-            var newDate = addMonths(new Date(year,month,day),Interval).toString()      
-            const dateOfMaturity=newDate
-            const LoanDateData={
-                dateOfMaturity,dateOfLoan,newDate
-            }
-            const amountgiven=user.loandets.Lamount
-            const percent=user.loandets.Percentage
-            const par =(parseInt(percent)/100)*parseInt(amountgiven)
-            const amountToRepay =par+parseInt(amountgiven)
-
-            user.LoanActive=true
-            user.LoanRequest=false
-            user.amountToRepay=amountToRepay
-            user.amountToRepayBalance=amountToRepay
-            user.LoanDateData=LoanDateData
-
-            user.save().then(response=>{
-                res.json({
-                    message:"activated",
-                    status:true,
-                })
-            })
-        }
-    })
+    Admin.findById({ _id: req.body.admin._id }, (err, admin) => {
+        if (err) {
+          res.status(400).json({
+            message: "error occured or admin not found",
+            status: false,
+          });
+        } else {
+          admin.activityLogs.push(req.body);
+          admin.save();
+          
+          User.findById({_id:req.params.id},(err,user)=>{
+              if(err){
+                  res.send(err)
+              }
+              else{
+                  
+                  const dateOfLoan =new Date().toISOString().slice(0,10)
+                  const Interval=parseInt(user.loandets.Interval) 
+                  const d=new Date()
+                  const year=d.getFullYear()
+                  const month=d.getMonth()
+                  const day=d.getDate()
+                  var newDate = addMonths(new Date(year,month,day),Interval).toString()      
+                  const dateOfMaturity=newDate
+                  const LoanDateData={
+                      dateOfMaturity,dateOfLoan,newDate
+                  }
+                  const amountgiven=user.loandets.Lamount
+                  const percent=user.loandets.Percentage
+                  const par =(parseInt(percent)/100)*parseInt(amountgiven)
+                  const amountToRepay =par+parseInt(amountgiven)
+      
+                  user.LoanActive=true
+                  user.LoanRequest=false
+                  user.amountToRepay=amountToRepay
+                  user.amountToRepayBalance=amountToRepay
+                  user.LoanDateData=LoanDateData
+      
+                  user.save().then(response=>{
+                      res.json({
+                          message:"activated",
+                          status:true,
+                      })
+                  })
+              }
+          })
+        }})
 }
 
 exports.paynowloan=(req,res,next)=>{

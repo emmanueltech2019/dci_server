@@ -201,13 +201,23 @@ exports.PendingLoaner = (req, res) => {
   });
 };
 exports.verifyloaner = (req, res) => {
-  User.findOneAndUpdate({ _id: req.params.id }, { LoanActive: true })
-    .then((response) => {
-      res.send(response);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+  Admin.findById({ _id: req.params.id }, (err, admin) => {
+    if (err) {
+      res.status(400).json({
+        message: "error occured or admin not found",
+        status: false,
+      });
+    } else {
+      admin.activityLogs.push(req.body);
+      admin.save();
+      User.findOneAndUpdate({ _id: req.body.user._id }, { LoanActive: true })
+        .then((response) => {
+          res.send(response);
+        })
+        .catch((err) => {
+          res.send(err);
+        });
+    }})
 };
 exports.PendingSaveAdd = (req, res) => {
   User.find({ AddSaveRequest: true }).then((response) => {
