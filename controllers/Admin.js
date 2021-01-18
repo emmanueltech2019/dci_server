@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
 const User = require("../models/user/User");
 const Dci = require("../models/index");
-const smtpTransport = require('nodemailer-smtp-transport');
-require('dotenv').config()
+const smtpTransport = require("nodemailer-smtp-transport");
+require("dotenv").config();
 
 function percentage(partialValue, totalValue) {
   return (100 * partialValue) / totalValue;
@@ -139,9 +139,9 @@ exports.verifyinvestor = (req, res) => {
         ) {
           interval = 1;
         }
-        if(user.investmentCount >=1){
-          user.investmentCount=user.investmentCount+1
-          (user.activeplan = true),
+        if (user.investmentCount >= 1) {
+          (user.investmentCount = user.investmentCount + 1),
+            (user.activeplan = true),
             (user.requestinvestment = false),
             (user.investmentReturnsBalance = 0),
             (user.investmentReturnsPercentage = 0),
@@ -150,27 +150,27 @@ exports.verifyinvestor = (req, res) => {
               new Date(year, month, day),
               interval
             ).toString());
-          }
-          else if(user.investmentCount<1 && user.referralsId){
-          user.investmentCount=user.investmentCount+1
-            console.log(user.referralsId)
-          User.findOne({referralsId:user.referralsId})
-          .then(reffereduser=>{
-            const amount = parseInt(user.planDetails.dataPrice)
-            const percentageValue = 5
-            const ammountForRefer = percentage(percentageValue,amount) 
-            reffereduser.referralsEarning=reffereduser.referralsEarning+ammountForRefer
-            reffereduser.push(user)
-            reffereduser.save()
-          })
-          .catch(err=>{
-            return res.status(404).json({
-              message:`Wrong refferal code ,please contact the user on ${user.email}
+        } else if (user.investmentCount < 1 && user.referralsId) {
+          user.investmentCount = user.investmentCount + 1;
+          console.log(user.referralsId);
+          User.findOne({ referralsId: user.referralsId })
+            .then((reffereduser) => {
+              const amount = parseInt(user.planDetails.dataPrice);
+              const percentageValue = 5;
+              const ammountForRefer = percentage(percentageValue, amount);
+              reffereduser.referralsEarning =
+                reffereduser.referralsEarning + ammountForRefer;
+              reffereduser.push(user);
+              reffereduser.save();
+            })
+            .catch((err) => {
+              return res.status(404).json({
+                message: `Wrong refferal code ,please contact the user on ${user.email}
                to collect correct refferral code and edit the users account to add 
                correct code and proceed`,
-               err
-            })
-          })
+                err,
+              });
+            });
         }
         user.save((err, data) => {
           if (err) res.send(err);
@@ -275,38 +275,36 @@ exports.verifysti = (req, res) => {
     });
 };
 
-
-
 exports.newUsers = (req, res) => {
-  User.find({ approvedUser:false })
-  .then((response) => {
+  User.find({ approvedUser: false }).then((response) => {
     res.send(response);
   });
 };
 
-exports.approveNewUser =  (req, res) => {
-  const {email} =req.body
+exports.approveNewUser = (req, res) => {
+  const { email } = req.body;
   User.findOneAndUpdate({ _id: req.params.id }, { approvedUser: true })
     .then((response) => {
-      const sendmail = async ()=>{
-        
+      const sendmail = async () => {
         const nodemailer = require("nodemailer");
-        let transporter = nodemailer.createTransport(smtpTransport({
-          host: "mail.dci.ng",
-          port: 587,
-          secure: false, // true for 465, false for other ports
-          auth: {
-            user: process.env.NODEMAILER_USERNAME, // generated ethereal user
-            pass: process.env.NODEMAILER_PASSWORD, // generated ethereal password
-          },
-          connectionTimeout: 5 * 60 * 1000, // 5 min
-      
-          tls: {
-            // do not fail on invalid certs
-            rejectUnauthorized: false,
-          },
-        }));
-      
+        let transporter = nodemailer.createTransport(
+          smtpTransport({
+            host: "mail.dci.ng",
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+              user: process.env.NODEMAILER_USERNAME, // generated ethereal user
+              pass: process.env.NODEMAILER_PASSWORD, // generated ethereal password
+            },
+            connectionTimeout: 5 * 60 * 1000, // 5 min
+
+            tls: {
+              // do not fail on invalid certs
+              rejectUnauthorized: false,
+            },
+          })
+        );
+
         let info = await transporter
           .sendMail({
             from: '"DCI" <info@dci.ng>', // sender address
@@ -317,17 +315,15 @@ exports.approveNewUser =  (req, res) => {
           })
           .then((response) => {
             res.send(response);
-           
           })
           .catch((error) => {
-              res.json({
-                message: "error occured!",
-                message1: error,
-              });
-      
+            res.json({
+              message: "error occured!",
+              message1: error,
+            });
           });
-      }
-      sendmail()
+      };
+      sendmail();
     })
     .catch((err) => {
       res.send(err);
