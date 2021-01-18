@@ -196,7 +196,7 @@ exports.verifyinvestor = (req, res) => {
               );
               user.save((err, data) => {
                 if (err) res.send(err);
-                res.send(data);
+                res.json({data,message:"activated"});
               });
             }
             else{
