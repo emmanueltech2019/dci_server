@@ -160,12 +160,12 @@ exports.verifyinvestor = (req, res) => {
               console.log("Admin ohhhhhh")
             }
             else{
-              
+
             }
           })
           User.find({ accesscode: user.referralsId },(err,users)=>{
             if(users.length >=1){
-              console.log("Admin ohhhhhh")
+              console.log("userohh ohhhhhh")
             }
             else{
               
