@@ -88,6 +88,9 @@ const AdminSchema = new Schema({
     resetPasswordExpires: {
         type: Date,
         required: false
+    },
+    accesscode:{
+        type:String
     }
     // activityLogs:[
     //     {

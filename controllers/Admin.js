@@ -5,6 +5,7 @@ const { SECRET_KEY } = require("../config");
 const User = require("../models/user/User");
 const Dci = require("../models/index");
 const smtpTransport = require("nodemailer-smtp-transport");
+const securePin = require("secure-pin");
 require("dotenv").config();
 
 function percentage(num, per) {
@@ -12,6 +13,7 @@ function percentage(num, per) {
 }
 
 exports.signup = (req, res, next) => {
+  const accesscode = securePin.generatePinSync(4);
   bcrypt.hash(req.body.password, 10).then((hash) => {
     const user = new Admin({
       fullname: req.body.fullname,
@@ -27,6 +29,7 @@ exports.signup = (req, res, next) => {
       idType: req.body.idType,
       AdminType: req.body.type,
       password: hash,
+      accesscode
     });
     user
       .save()
@@ -152,7 +155,22 @@ exports.verifyinvestor = (req, res) => {
             ).toString());
         } else if (user.investmentCount < 1 && user.referralsId) {
           user.investmentCount = user.investmentCount + 1;
-          console.log(user.referralsId);
+          Admin.find({ accesscode: user.referralsId },(err,users)=>{
+            if(users.length >=1){
+              console.log("Admin ohhhhhh")
+            }
+            else{
+              
+            }
+          })
+          User.find({ accesscode: user.referralsId },(err,users)=>{
+            if(users.length >=1){
+              console.log("Admin ohhhhhh")
+            }
+            else{
+              
+            }
+          })
           User.findOne(
             { accesscode: user.referralsId },
             (err, reffereduser) => {

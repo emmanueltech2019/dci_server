@@ -44,6 +44,7 @@ exports.addTosavings = (req, res, next) => {
             res.json({
               response,
               response1,
+              message:"Account Activated Successfully"
             });
           });
         })
