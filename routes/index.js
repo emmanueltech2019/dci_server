@@ -2,8 +2,8 @@ const { updateProfile,resetpassword, reset, resetPasswordChange} = require('../c
 
 const router =require('express').Router()
 
-router.post('/update/profile/:id',updateProfile)
-router.post('/pasword/reset-request',resetpassword)
-router.post('/pasword/reset/:token',reset)
-router.post('/pasword/change/:token',resetPasswordChange)
+router.put('/update/profile/:id',updateProfile)
+router.post('/password/reset-request',resetpassword)
+router.post('/password/reset/:token',reset)
+router.post('/password/change/:token',resetPasswordChange)
 module.exports=router
