@@ -188,7 +188,8 @@ exports.verifyinvestor = (req, res) => {
                   const ammountForRefer = percentage(amount, percentageValue);
                   reffereduser.referralsEarning =
                     reffereduser.referralsEarning + ammountForRefer;
-                  reffereduser.referralsUsers.push(user);
+                    const {_id,email,fullname,phonenumber}=user
+                  reffereduser.referralsUsers.push({_id,email,fullname,phonenumber});
                   reffereduser.save();
                 }
               );
@@ -230,7 +231,8 @@ exports.verifyinvestor = (req, res) => {
                   const ammountForRefer = percentage(amount, percentageValue);
                   reffereduser.referralsEarning =
                     reffereduser.referralsEarning + ammountForRefer;
-                  reffereduser.referralsUsers.push(user);
+                    const {_id,email,fullname,phonenumber}=user
+                  reffereduser.referralsUsers.push({_id,email,fullname,phonenumber});
                   reffereduser.save();
                 }
               );
