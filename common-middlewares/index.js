@@ -1,4 +1,27 @@
 const jwt=require('jsonwebtoken')
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const {CloudinaryStorage} = require("multer-storage-cloudinary");
+
+
+const {API_SECRET,API_KEY,CLOUD_NAME} =require("../config")
+
+
+cloudinary.config({
+	cloud_name: CLOUD_NAME,
+	api_key: API_KEY,
+	api_secret:API_SECRET
+  });
+  const storage = new CloudinaryStorage({
+	cloudinary: cloudinary,
+	folder: "profilepics",
+	allowedFormats: ["jpg", "png"],
+	transformation: [{ width: 500, height: 500, crop: "limit" }]
+  });
+  
+exports.upload = multer({ storage: storage });
+
+
 exports.requireSignin =(req,res,next)=>{
     if(req.headers.authorization){
         const token =req.headers.authorization.split(" ")[1]

@@ -38,3 +38,26 @@ exports.createProduct=(req,res)=>{
         }
     })
 }
+
+exports.singleProduct=(req,res)=>{
+    Product.findOne({_id:req.params.id},(error,product)=>{
+        if(error) return res.status(400).json({error})
+        if(product){
+            return res.status(200).json({
+                product
+            })
+        }
+    })
+}
+
+exports.allProducts=(req,res)=>{
+    Product.find({})
+    .then(products=>{
+        return res.status(200).json({
+            products
+        })
+    })
+    .catch(error=>{
+        return res.status(400).json({error})
+    })
+}

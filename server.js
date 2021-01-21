@@ -40,6 +40,7 @@ app.use("/api/v1/",require("./routes/loan/loan"))
 app.use("/api/v1/shop/",require("./routes/Category"))
 app.use("/api/v1/shop/",require("./routes/Product"))
 app.use("/api/v1/shop/",require("./routes/Cart"))
+app.use("/api/v1/shop/",require("./routes/Coupon"))
 app.use("/api/v1/admin/",require("./routes/Admin/Admin"))
 const APPPORT = process.env.PORT||PORT
 app.listen(APPPORT,()=>{

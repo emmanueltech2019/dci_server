@@ -1,27 +1,7 @@
 const express = require('express');
+const { upload } = require('../../common-middlewares');
 const router = express.Router();
-
-const multer = require("multer");
-const cloudinary = require("cloudinary").v2;
-const {CloudinaryStorage} = require("multer-storage-cloudinary");
-
 const userCtrl = require('../../controllers/user');
-const {API_SECRET,API_KEY,CLOUD_NAME} =require("../../config")
-
-
-cloudinary.config({
-	cloud_name: CLOUD_NAME,
-	api_key: API_KEY,
-	api_secret:API_SECRET
-  });
-  const storage = new CloudinaryStorage({
-	cloudinary: cloudinary,
-	folder: "profilepics",
-	allowedFormats: ["jpg", "png"],
-	transformation: [{ width: 500, height: 500, crop: "limit" }]
-  });
-  
-  const upload = multer({ storage: storage }).single("image");
 
 
 
@@ -36,7 +16,7 @@ router.put('/register/personal/:id', userCtrl.updatePersonalDetails);
 router.put('/personal/:id/newuser1', userCtrl.updateDetails1);
 router.put('/personal/:id/newuser/two', userCtrl.updateDetails2);
 router.put('/personal/:id/update/email/user', userCtrl.updateEmail);
-router.post('/personal/:id/newuser/image/upload',upload, userCtrl.uploadimage);
+router.post('/personal/:id/newuser/image/upload',upload.single("image"), userCtrl.uploadimage);
 router.post('/login', userCtrl.login);
 
 
