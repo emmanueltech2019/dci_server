@@ -69,7 +69,7 @@ exports.login = (req, res) => {
         status: false,
       });
     }
-    const token = jwt.sign({ id: user._id }, SECRET_KEY, {
+    const token = jwt.sign({ id: user._id,role:user.role}, SECRET_KEY, {
       expiresIn: "86400s",
     });
     res.status(200).json({

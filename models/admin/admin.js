@@ -101,6 +101,10 @@ const AdminSchema = new Schema({
             type:Object,
         }
     ],
+    role:{
+        type:String,
+        default:"admin"
+    }
     // activityLogs:[
     //     {
     //         type: Schema.Types.ObjectId,

@@ -208,6 +208,10 @@ const UserSchema = new Schema({
     investmentCount:{
         type:Number,
         default:0
+    },
+    role:{
+        type:String,
+        default:"user"
     }
 },{timestamp:true})
 
