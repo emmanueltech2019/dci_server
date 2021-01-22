@@ -130,6 +130,8 @@ exports.verifyinvestor = (req, res) => {
       const year = d.getFullYear();
       const month = d.getMonth();
       const day = d.getDate();
+      console.log("investment step one")
+      
       User.findById({ _id: req.body.user._id }, (err, user) => {
         let interval = 0;
         if (
@@ -143,6 +145,7 @@ exports.verifyinvestor = (req, res) => {
         ) {
           interval = 1;
         }
+        console.log("investment step one")
         if (user.investmentCount >= 1) {
           (user.investmentCount = user.investmentCount + 1),
             (user.activeplan = true),
@@ -245,6 +248,23 @@ exports.verifyinvestor = (req, res) => {
              
             }
           })
+        }
+        else{
+          user.investmentCount = user.investmentCount + 1;
+          user.investmentCount = user.investmentCount + 1,
+            user.activeplan = true,
+            user.requestinvestment = false,
+            user.investmentReturnsBalance = 0,
+            user.investmentReturnsPercentage = 0,
+            user.investmentStartDate = new Date(),
+            user.investmentNextPayDate = addMonths(
+              new Date(year, month, day),
+              interval
+            ).toString();
+            user.save((err, data) => {
+              if (err) res.send(err);
+              res.send(data);
+            });
         }
       }).catch((err) => {
         res.send(err);
