@@ -1,4 +1,6 @@
 const Cart =require('../models/Cart')
+
+
 exports.addItemToCart=(req,res)=>{
     // const cart = new Cart({
     //     user:req.user.id,
@@ -15,6 +17,7 @@ exports.addItemToCart=(req,res)=>{
         if(error) return res.status(400).json({message:"herer1",error})
         if(cart){
             const product =req.body.cartItems.product
+            console.log(cart)
             const item=cart.cartItems.find(c=>c.product==product)
             let condition ,update;
             if(item){

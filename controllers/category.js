@@ -64,6 +64,7 @@ exports.singleCategoryProducts = (req, res) => {
         }
       });
     }
-    // res.send(category)
   });
 };
+
+
