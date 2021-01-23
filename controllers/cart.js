@@ -64,7 +64,7 @@ function runUpdate(condition, updateData) {
   }
   
   exports.addItemToCart = (req, res) => {
-    Cart.findOne({ user: req.user._id }).exec((error, cart) => {
+    Cart.findOne({ user: req.user.id }).exec((error, cart) => {
       if (error) return res.status(400).json({ error });
       if (cart) {
         //if cart already exists then update cart by quantity
@@ -75,14 +75,14 @@ function runUpdate(condition, updateData) {
           const item = cart.cartItems.find((c) => c.product == product);
           let condition, update;
           if (item) {
-            condition = { user: req.user._id, "cartItems.product": product };
+            condition = { user: req.user.id, "cartItems.product": product };
             update = {
               $set: {
                 "cartItems.$": cartItem,
               },
             };
           } else {
-            condition = { user: req.user._id };
+            condition = { user: req.user.id };
             update = {
               $push: {
                 cartItems: cartItem,
@@ -105,7 +105,7 @@ function runUpdate(condition, updateData) {
       } else {
         //if cart not exist then create a new cart
         const cart = new Cart({
-          user: req.user._id,
+          user: req.user.id,
           cartItems: req.body.cartItems,
         });
         cart.save((error, cart) => {
