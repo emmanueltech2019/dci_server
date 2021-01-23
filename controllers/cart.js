@@ -69,7 +69,7 @@ function runUpdate(condition, updateData) {
       if (cart) {
         //if cart already exists then update cart by quantity
         let promiseArray = [];
-  
+        console.log(req.body.cartItems)
         req.body.cartItems.forEach((cartItem) => {
           const product = cartItem.product;
           const item = cart.cartItems.find((c) => c.product == product);
