@@ -86,8 +86,9 @@ exports.addItemToCart = (req, res) => {
                   (c) => c.product == product
                 );
                 if (mainCart) {
+                  // cart.cartItems.find()
                   cart.quantity + 1;
-                  console.log(cart.quantity)
+                  console.log(mainCart)
                   cart.save((err, data) => {
                     if (err) {
                       return res.status(400).json({ error: err });
