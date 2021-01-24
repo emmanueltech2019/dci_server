@@ -58,7 +58,7 @@ function runUpdate(condition, updateData) {
       //you update code here
   
       Cart.findOneAndUpdate(condition, updateData, { upsert: true })
-        .then((result) => resolve())
+        .then((result) => resolve(result))
         .catch((err) => reject(err));
     });
   }
