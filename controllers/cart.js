@@ -82,7 +82,7 @@ exports.addItemToCart = (req, res) => {
               }
               if (cart) {
                 console.log("cart",cart)
-                const mainCart = res.cartItems.find(
+                const mainCart = cart.cartItems.find(
                   (c) => c.product == product
                 );
                 if (mainCart) {
@@ -114,7 +114,6 @@ exports.addItemToCart = (req, res) => {
               cartItems: cartItem,
             },
           };
-          console.log("else statement", update, condition);
         }
         promiseArray.push(runUpdate(condition, update));
         //Cart.findOneAndUpdate(condition, update, { new: true }).exec();
@@ -126,7 +125,6 @@ exports.addItemToCart = (req, res) => {
         //     }
         // })
       });
-      console.log(promiseArray);
       Promise.all(promiseArray)
         .then((response) =>
           res.status(201).json({ response, body: req.body.cartItems })
