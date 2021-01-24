@@ -119,7 +119,7 @@ exports.payment=(req,res,next)=>{
 }
 
 exports.terminate=(req,res)=>{
-    User.findByIdAndUpdate({_id:req.params.id},{requestinvestment:false,activeplan:false})
+    User.findByIdAndUpdate({_id:req.params.id},{requestinvestment:false,activeplan:false,terminate:true})
     .then(response=>{
         res.status(201).json({ 
             message:"Successfully update",

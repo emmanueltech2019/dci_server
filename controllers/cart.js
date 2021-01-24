@@ -82,6 +82,7 @@ function runUpdate(condition, updateData) {
                 "cartItems.$": cartItem,
               },
             };
+            console.log("if statement",update,condition)
           } else {
             condition = { user: req.user.id };
             update = {
@@ -89,6 +90,7 @@ function runUpdate(condition, updateData) {
                 cartItems: cartItem,
               },
             };
+            console.log("else statement",update,condition)
           }
           promiseArray.push(runUpdate(condition, update));
           //Cart.findOneAndUpdate(condition, update, { new: true }).exec();
