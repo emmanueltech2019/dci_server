@@ -104,7 +104,7 @@ function runUpdate(condition, updateData) {
         });
         console.log(promiseArray)
         Promise.all(promiseArray)
-          .then((response) => res.status(201).json({ response }))
+          .then((response) => res.status(201).json({ response,body:req.body.cartItems }))
           .catch((error) => res.status(400).json({ error }));
       } else {
         //if cart not exist then create a new cart
