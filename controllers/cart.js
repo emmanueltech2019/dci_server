@@ -78,7 +78,7 @@ exports.addItemToCart = (req, res) => {
             { user: req.user.id, "cartItems.product": product },
             (err, cart) => {
               if (err) {
-                res.status(400).json({ error: err });
+                return res.status(400).json({ error: err });
               }
               if (cart) {
                 console.log("cart",cart)
@@ -89,12 +89,14 @@ exports.addItemToCart = (req, res) => {
                   cart.quantity + 1;
                   cart.save((err, data) => {
                     if (err) {
-                      res.status(400).json({ error: err });
+                      return res.status(400).json({ error: err });
                     }
-                    res.status(200).json({
-                      message: "Added To Cart",
-                      data
-                    });
+                    if(data){
+                      return res.status(200).json({
+                        message: "Added To Cart",
+                        data
+                      });
+                    }
                   });
                 }
               }
