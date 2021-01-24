@@ -127,11 +127,11 @@ exports.addItemToCart = (req, res) => {
         //     }
         // })
       });
-      Promise.all(promiseArray)
-        .then((response) =>
-          res.status(201).json({ response, body: req.body.cartItems })
-        )
-        .catch((error) => res.status(400).json({ error }));
+      // Promise.all(promiseArray)
+      //   .then((response) =>
+      //     res.status(201).json({ response, body: req.body.cartItems })
+      //   )
+      //   .catch((error) => res.status(400).json({ error }));
     } else {
       //if cart not exist then create a new cart
       const cart = new Cart({
