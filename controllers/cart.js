@@ -78,7 +78,8 @@ function runUpdate(condition, updateData) {
           if (item) {
             Cart.findOne({user: req.user.id, "cartItems.product": product})
             .then(res=>{
-              console.log(res)
+              const mainCart=  res.cartItems.find((c) => c.product == product)
+              console.log(mainCart)
             })
             .catch(err=>{
               console.log(err)
