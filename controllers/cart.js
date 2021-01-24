@@ -80,28 +80,34 @@ exports.addItemToCart = (req, res) => {
               if (err) {
                 return res.status(400).json({ error: err });
               }
-              if (cart) {
-                console.log("cart",cart)
-                const mainCart = cart.cartItems.find(
-                  (c) => c.product == product
-                );
-                if (mainCart) {
-                  // cart.cartItems.find()
-                  cart.quantity + 1;
-                  console.log(mainCart)
-                  cart.save((err, data) => {
-                    if (err) {
-                      return res.status(400).json({ error: err });
-                    }
-                    if(data){
-                      return res.status(200).json({
-                        message: "Added To Cart",
-                        data
-                      });
-                    }
-                  });
-                }
+              if(cart){
+                
+                Cart.findOneAndUpdate(
+                  { user: req.user.id, "cartItems.product": product },
+                  {cartItems: cartItem,})
               }
+              // if (cart) {
+              //   console.log("cart",cart)
+              //   const mainCart = cart.cartItems.find(
+              //     (c) => c.product == product
+              //   );
+              //   if (mainCart) {
+              //     cart.cartItems.find((c) => c.product == product)
+              //     cart.quantity + 1;
+              //     console.log(mainCart)
+              //     cart.save((err, data) => {
+              //       if (err) {
+              //         return res.status(400).json({ error: err });
+              //       }
+              //       if(data){
+              //         return res.status(200).json({
+              //           message: "Added To Cart",
+              //           data
+              //         });
+              //       }
+              //     });
+              //   }
+              // }
             }
           );
 
