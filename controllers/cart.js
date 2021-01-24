@@ -81,6 +81,7 @@ exports.addItemToCart = (req, res) => {
                 res.status(400).json({ error: err });
               }
               if (cart) {
+                console.log("cart",cart)
                 const mainCart = res.cartItems.find(
                   (c) => c.product == product
                 );
