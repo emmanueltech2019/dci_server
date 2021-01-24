@@ -76,13 +76,20 @@ function runUpdate(condition, updateData) {
           let condition, update;
           console.log("step one",item)
           if (item) {
+            Cart.findOne({user: req.user.id, "cartItems.product": product})
+            .then(res=>{
+              console.log(res)
+            })
+            .catch(err=>{
+              console.log(err)
+            })
             condition = { user: req.user.id, "cartItems.product": product };
             update = {
               $set: {
                 cartItems: cartItem,
               },
             };
-            console.log("if statement",update,condition)
+            
           } else {
             condition = { user: req.user.id };
             update = {
