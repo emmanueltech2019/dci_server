@@ -79,7 +79,7 @@ function runUpdate(condition, updateData) {
             condition = { user: req.user.id, "cartItems.product": product };
             update = {
               $set: {
-                "cartItems.$": cartItem,
+                cartItems: cartItem,
               },
             };
             console.log("if statement",update,condition)
