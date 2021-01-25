@@ -392,6 +392,16 @@ exports.newUsers = (req, res) => {
     res.send(response);
   });
 };
+exports.UsersActive = (req, res) => {
+  User.find({ approvedUser: true }).then((response) => {
+    res.send(response);
+  });
+};
+exports.UsersDeclined = (req, res) => {
+  User.find({ declinedAccount: "declined" }).then((response) => {
+    res.send(response);
+  });
+};
 
 exports.approveNewUser = (req, res) => {
   const { email } = req.body;
@@ -441,3 +451,55 @@ exports.approveNewUser = (req, res) => {
       res.send(err);
     });
 };
+
+
+
+exports.disapproveAccount = (req, res) => {
+  const { email } = req.body;
+  User.findOneAndUpdate({ _id: req.params.id }, { declinedAccount: "declined" })
+    .then((response) => {
+      const sendmail = async () => {
+        const nodemailer = require("nodemailer");
+        let transporter = nodemailer.createTransport(
+          smtpTransport({
+            host: "mail.dci.ng",
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+              user: process.env.NODEMAILER_USERNAME, // generated ethereal user
+              pass: process.env.NODEMAILER_PASSWORD, // generated ethereal password
+            },
+            connectionTimeout: 5 * 60 * 1000, // 5 min
+
+            tls: {
+              // do not fail on invalid certs
+              rejectUnauthorized: false,
+            },
+          })
+        );
+
+        let info = await transporter
+          .sendMail({
+            from: '"DCI" <info@dci.ng>', // sender address
+            to: req.body.email, // list of receivers
+            subject: "Account Activated Failure", // Subject line
+            text: "", // plain text body
+            html: `<h1>You DCI Account Was Not Successfully Approved</h1>`, // html body
+          })
+          .then((response) => {
+            res.send(response);
+          })
+          .catch((error) => {
+            res.json({
+              message: "error occured!",
+              message1: error,
+            });
+          });
+      };
+      sendmail();
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+

@@ -19,8 +19,11 @@ router.get("/user/requestaddtosti/paysaveadd",adminCtrl.stirequest)
 router.post("/user/verifyaddtosti/save/:id",adminCtrl.verifysti)
 
 router.get("/user/new/user/unapproved",adminCtrl.newUsers)
-router.post("/user/newUser/:id/approve",adminCtrl.approveNewUser)
+router.get("/user/new/user/approved",adminCtrl.UsersActive)
+router.get("/user/newUser/decline",adminCtrl.UsersDeclined)
 
+router.post("/user/newUser/:id/approve",adminCtrl.approveNewUser)
+router.post("/user/newUser/:id/decline",adminCtrl.disapproveAccount)
 
 router.get("/usersthatsaves/savings/activeusers",adminCtrl.savingsIsActive)
 

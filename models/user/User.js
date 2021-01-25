@@ -212,6 +212,9 @@ const UserSchema = new Schema({
     role:{
         type:String,
         default:"user"
+    },
+    declinedAccount:{
+        type:String,
     }
 },{timestamp:true})
 
