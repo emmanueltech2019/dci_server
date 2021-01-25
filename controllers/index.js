@@ -142,7 +142,7 @@ exports.resetpassword = (req, res) => {
         let link =
           "http://" +
           req.body.host +
-          req.body.path +"?"+
+          req.body.path +"?token="+
           user.resetPasswordToken;
 
         sendmailtouser = async () => {
