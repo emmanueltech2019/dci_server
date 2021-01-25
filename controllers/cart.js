@@ -85,6 +85,7 @@ exports.addItemToCart = (req, res) => {
                 const mainCart = cart.cartItems.findIndex(
                   (c) => c.product == product
                 );
+                cart[mainCart]=req.body.cart
                 if (mainCart) {
                   cart.cartItems.find((c) => c.product == product)
                   cart.quantity + 1;
