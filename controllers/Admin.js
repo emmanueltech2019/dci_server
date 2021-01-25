@@ -513,7 +513,7 @@ exports.disapproveAccount = (req, res) => {
     });
 };
 
-exports.declineInvestor=()=>{
+exports.declineInvestor=(req,res)=>{
   Admin.findById({ _id: req.body.id }, (err, admin) => {
     if (err) {
       res.status(400).json({
