@@ -218,6 +218,10 @@ const UserSchema = new Schema({
     },
     declinedInvestment:{
         type:String,
+    },
+    investor:{
+        type:Boolean,
+        default:false
     }
 },{timestamp:true})
 

@@ -107,6 +107,16 @@ exports.Pending = (req, res) => {
     res.send(response);
   });
 };
+exports.AllInvestors = (req, res) => {
+  User.find({ investor: true }).then((response) => {
+    res.send(response);
+  });
+};
+exports.Pending = (req, res) => {
+  User.find({ requestinvestment: true }).then((response) => {
+    res.send(response);
+  });
+};
 function addMonths(date, months) {
   var d = date.getDate();
   date.setMonth(date.getMonth() + +months);

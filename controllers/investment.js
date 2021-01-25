@@ -81,7 +81,7 @@ exports.getsingleSubPlan=(req,res,next)=>{
 
 
 exports.pickedplan=(req,res,next)=>{
-    User.findByIdAndUpdate({_id:req.params.id},{requestinvestment:true,planDetails:req.body})
+    User.findByIdAndUpdate({_id:req.params.id},{requestinvestment:true,planDetails:req.body,investor:true})
     .then(response=>{
         res.status(201).json({
             message:"Successfully update",
