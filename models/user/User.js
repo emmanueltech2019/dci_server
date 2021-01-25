@@ -215,6 +215,9 @@ const UserSchema = new Schema({
     },
     declinedAccount:{
         type:String,
+    },
+    declinedInvestment:{
+        type:String,
     }
 },{timestamp:true})
 

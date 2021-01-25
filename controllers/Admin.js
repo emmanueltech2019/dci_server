@@ -503,3 +503,22 @@ exports.disapproveAccount = (req, res) => {
     });
 };
 
+exports.declineInvestor=()=>{
+  Admin.findById({ _id: req.body.id }, (err, admin) => {
+    if (err) {
+      res.status(400).json({
+        message: "error occured or admin not found",
+        status: false,
+      });
+    } else {
+      admin.activityLogs.push(req.body);
+      admin.save();
+      User.findOneAndUpdate({_id:req.params.id},{activeplan:false,declinedInvestment:"declined",requestinvestment:false},(err,user)=>{
+        if(err) res.status(400).json({error:err})
+        else{
+          res.status(200).json({user})
+        }
+      })
+    }
+  });
+}
