@@ -85,11 +85,7 @@ exports.addItemToCart = (req, res) => {
                 const mainCart = cart.cartItems.findIndex(
                   (c) => c.product == product
                 );
-                cart[mainCart]=req.body.cartItems
-                if (mainCart) {
-                  cart.cartItems.find((c) => c.product == product)
-                  cart.quantity + 1;
-                  console.log(mainCart)
+                cart[mainCart]=cart[mainCart].quantity+1
                   cart.save((err, data) => {
                     if (err) {
                       return res.status(400).json({ error: err });
@@ -101,7 +97,6 @@ exports.addItemToCart = (req, res) => {
                       });
                     }
                   });
-                }
               }
             }
           );
