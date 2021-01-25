@@ -141,8 +141,8 @@ exports.resetpassword = (req, res) => {
       user.save().then((user) => {
         let link =
           "http://" +
-          req.headers.host +
-          "/api/auth/reset/" +
+          req.body.host +
+          req.body.path +"?"+
           user.resetPasswordToken;
 
         sendmailtouser = async () => {

@@ -82,7 +82,7 @@ exports.addItemToCart = (req, res) => {
               }
               if (cart) {
                 console.log("cart",cart)
-                const mainCart = cart.cartItems.find(
+                const mainCart = cart.cartItems.findIndex(
                   (c) => c.product == product
                 );
                 if (mainCart) {
