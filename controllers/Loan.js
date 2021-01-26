@@ -23,6 +23,7 @@ exports.loandocs=(req,res)=>{
         }
         else{
             user.LoanRequest=true
+            user.Loan=true
             user.save()
             .then(response=>{
                 res.json({

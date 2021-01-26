@@ -218,8 +218,25 @@ const UserSchema = new Schema({
     },
     declinedInvestment:{
         type:String,
+        default:"no"
+    },
+    declinedSavings:{
+        type:String,
+        default:"no"
+    },
+    declinedLoan:{
+        type:String,
+        default:"no"
     },
     investor:{
+        type:Boolean,
+        default:false
+    },
+    Loan:{
+        type:Boolean,
+        default:false
+    },
+    Save:{
         type:Boolean,
         default:false
     }

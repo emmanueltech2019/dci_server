@@ -542,3 +542,93 @@ exports.declineInvestor=(req,res)=>{
     }
   });
 }
+
+
+exports.declineLoaner=(req,res)=>{
+  Admin.findById({ _id: req.body.id }, (err, admin) => {
+    if (err) {
+      res.status(400).json({
+        message: "error occured or admin not found",
+        status: false,
+      });
+    } else {
+      admin.activityLogs.push(req.body);
+      admin.save();
+      User.findOneAndUpdate({_id:req.params.id},{
+        LoanActive:false,
+        declinedLoan:"declined",
+        LoanRequest:false},(err,user)=>{
+        if(err) res.status(400).json({error:err})
+        else{
+          res.status(200).json({user})
+        }
+      })
+    }
+  });
+}
+exports.declineSaver=(req,res)=>{
+  Admin.findById({ _id: req.body.id }, (err, admin) => {
+    if (err) {
+      res.status(400).json({
+        message: "error occured or admin not found",
+        status: false,
+      });
+    } else {
+      admin.activityLogs.push(req.body);
+      admin.save();
+      User.findOneAndUpdate({_id:req.params.id},{
+        SavingsActive:false,
+        declinedSavings:"declined",
+        AddSaveRequest:false},(err,user)=>{
+        if(err) res.status(400).json({error:err})
+        else{
+          res.status(200).json({user})
+        }
+      })
+    }
+  });
+}
+
+
+
+exports.AllLoan = (req, res) => {
+  User.find({ Loan: true }).then((response) => {
+    res.send(response);
+  });
+};
+exports.AllSave = (req, res) => {
+  User.find({ Save: true }).then((response) => {
+    res.send(response);
+  });
+};
+exports.AllPendingLoan = (req, res) => {
+  User.find({ declinedLoan:"no",LoanRequest:true }).then((response) => {
+    res.send(response);
+  });
+};
+exports.AllPendingSave = (req, res) => {
+  User.find({ AddSaveRequest:true,declinedSavings:"no" }).then((response) => {
+    res.send(response);
+  });
+};
+
+exports.AllActiveLoan = (req, res) => {
+  User.find({ LoanActive: true }).then((response) => {
+    res.send(response);
+  });
+};
+exports.AllActiveSave = (req, res) => {
+  User.find({ SavingsActive: true }).then((response) => {
+    res.send(response);
+  });
+};
+exports.AllDeclinedLoan = (req, res) => {
+  User.find({ declinedLoan: "declined" }).then((response) => {
+    res.send(response);
+  });
+};
+exports.AllDeclinedSave = (req, res) => {
+  User.find({ declinedSavings: "declined" }).then((response) => {
+    res.send(response);
+  });
+};

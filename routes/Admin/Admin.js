@@ -25,11 +25,28 @@ router.get("/user/newUser/decline",adminCtrl.UsersDeclined)
 
 router.post("/user/newUser/:id/approve",adminCtrl.approveNewUser)
 router.post("/user/newUser/:id/decline",adminCtrl.disapproveAccount)
+router.post("/user/newUser/:id/decline/loan",adminCtrl.declineLoaner)
+router.post("/user/newUser/:id/decline/save",adminCtrl.declineSaver)
 
 router.get("/usersthatsaves/savings/activeusers",adminCtrl.savingsIsActive)
 
 router.get("/users/active/investors",adminCtrl.AllInvestorsActive)
 router.get("/users/all/investors",adminCtrl.AllInvestors)
 router.get("/users/declined/investors",adminCtrl.AllInvestorsdeclined)
+
+
+
+router.get("/users/all/loan",adminCtrl.AllLoan)
+router.get("/users/all/save",adminCtrl.AllSave)
+
+
+router.get("/users/all/pending/loan",adminCtrl.AllPendingLoan)
+router.get("/users/all/pending/save",adminCtrl.AllPendingSave)
+
+router.get("/users/all/active/loan",adminCtrl.AllActiveLoan)
+router.get("/users/all/active/save",adminCtrl.AllActiveSave)
+
+router.get("/users/all/declined/loan",adminCtrl.AllDeclinedLoan)
+router.get("/users/all/declined/save",adminCtrl.AllDeclinedSave)
 
 module.exports = router;

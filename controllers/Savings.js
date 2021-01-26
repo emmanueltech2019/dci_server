@@ -22,7 +22,7 @@ exports.payment=(req,res,next)=>{
 
 
 exports.addTosavings=(req,res,next)=>{
-    User.findOneAndUpdate({_id:req.params.id},{savingDets:req.body,AddSaveRequest:true},(err,user)=>{
+    User.findOneAndUpdate({_id:req.params.id},{savingDets:req.body,AddSaveRequest:true,Save:true},(err,user)=>{
         if(err){
             res.send(err)
         }
