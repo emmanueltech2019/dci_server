@@ -103,7 +103,7 @@ exports.AllAdmins = (req, res) => {
   });
 };
 exports.Pending = (req, res) => {
-  User.find({ requestinvestment: true }).then((response) => {
+  User.find({ requestinvestment: true,activeplan:false }).then((response) => {
     res.send(response);
   });
 };
