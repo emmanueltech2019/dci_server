@@ -28,4 +28,7 @@ router.post("/user/newUser/:id/decline",adminCtrl.disapproveAccount)
 
 router.get("/usersthatsaves/savings/activeusers",adminCtrl.savingsIsActive)
 
+router.get("/users/active/investors",adminCtrl.AllInvestorsActive)
+router.get("/users/declined/investors",adminCtrl.AllInvestorsdeclined)
+
 module.exports = router;

@@ -112,6 +112,16 @@ exports.AllInvestors = (req, res) => {
     res.send(response);
   });
 };
+exports.AllInvestorsActive = (req, res) => {
+  User.find({ activeplan: true }).then((response) => {
+    res.send(response);
+  });
+};
+exports.AllInvestorsdeclined= (req, res) => {
+  User.find({ declinedInvestment: "declined" }).then((response) => {
+    res.send(response);
+  });
+};
 exports.Pending = (req, res) => {
   User.find({ requestinvestment: true }).then((response) => {
     res.send(response);
