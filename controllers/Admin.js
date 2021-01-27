@@ -13,8 +13,7 @@ function percentage(num, per) {
 }
 
 exports.signup = (req, res, next) => {
-  const accesscode1 = securePin.generatePinSync(4);
-  const accesscode = accesscode1+1000;
+  const accesscode = securePin.generatePinSync(4);
   bcrypt.hash(req.body.password, 10).then((hash) => {
     const user = new Admin({
       fullname: req.body.fullname,
