@@ -13,7 +13,17 @@ function percentage(num, per) {
 }
 
 exports.signup = (req, res, next) => {
-  const accesscode = securePin.generatePinSync(4);
+  let accesscode;
+  function gene() {
+    accesscode = securePin.generatePinSync(4);
+    if(accesscode.charAt(0)==='0'){
+      gene()
+    }
+    else{
+      return true
+    }
+  }
+  gene()
   bcrypt.hash(req.body.password, 10).then((hash) => {
     const user = new Admin({
       fullname: req.body.fullname,
@@ -170,7 +180,7 @@ exports.verifyinvestor = (req, res) => {
           (user.investmentCount = user.investmentCount + 1),
             (user.activeplan = true),
             (user.requestinvestment = false),
-            (user.investmentReturnsBalance = 0),
+            (user.investmentReturnsBalance = user.planDetails.TotalROI),
             (user.investmentReturnsPercentage = 0),
             (user.investmentStartDate = new Date()),
             (user.investmentNextPayDate = addMonths(
@@ -199,7 +209,7 @@ exports.verifyinvestor = (req, res) => {
                   }
                   user.activeplan = true;
                   user.requestinvestment = false;
-                  user.investmentReturnsBalance = 0;
+                  user.investmentReturnsBalance = user.planDetails.TotalROI;
                   user.investmentReturnsPercentage = 0;
                   user.investmentStartDate = new Date();
                   user.investmentNextPayDate = addMonths(
@@ -242,7 +252,7 @@ exports.verifyinvestor = (req, res) => {
                   }
                   user.activeplan = true;
                   user.requestinvestment = false;
-                  user.investmentReturnsBalance = 0;
+                  user.investmentReturnsBalance = user.planDetails.TotalROI;
                   user.investmentReturnsPercentage = 0;
                   user.investmentStartDate = new Date();
                   user.investmentNextPayDate = addMonths(
@@ -274,7 +284,7 @@ exports.verifyinvestor = (req, res) => {
           user.investmentCount = user.investmentCount + 1,
             user.activeplan = true,
             user.requestinvestment = false,
-            user.investmentReturnsBalance = 0,
+            user.investmentReturnsBalance = user.planDetails.TotalROI,
             user.investmentReturnsPercentage = 0,
             user.investmentStartDate = new Date(),
             user.investmentNextPayDate = addMonths(
@@ -632,3 +642,22 @@ exports.AllDeclinedSave = (req, res) => {
     res.send(response);
   });
 };
+
+
+
+exports.payActiveInvestor=(req,res)=>{
+  Admin.findOne({_id:req.params.id})
+  .then(resp=>{
+    console.log(res.AdminType)
+    if(resp.AdminType=="superadmin"){
+      User.find({_id:req.body.userId})
+      .then(response=>{
+        res.send(response)
+      })
+    }else{
+      res.status(400).json({
+        message:"access denied"
+      })
+    }
+  })
+}
