@@ -652,7 +652,6 @@ exports.payActiveInvestor=(req,res)=>{
     if(resp.AdminType=="superadmin"){
       User.findOne({_id:req.body.userId})
       .then(response=>{
-        let currentbalance =parseInt(response.investmentReturnsBalance)
         response.investmentReturnsBalance=response.investmentReturnsBalance-parseInt(req.body.amount)
         response.save((err,data)=>{
           if(err) res.send(err)
