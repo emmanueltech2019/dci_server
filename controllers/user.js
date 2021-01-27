@@ -54,7 +54,17 @@ exports.updatePersonalDetails = (req, res, next) => {
 };
 
 exports.verify = async (req, res, next) => {
-  const accesscode = securePin.generatePinSync(4);
+  let accesscode;
+  function gene() {
+    accesscode = securePin.generatePinSync(4);
+    if(accesscode.charAt(0)==='0'){
+      gene()
+    }
+    else{
+      return true
+    }
+  }
+  gene()
   const nodemailer = require("nodemailer");
   let transporter = nodemailer.createTransport(smtpTransport({
     host: "mail.dci.ng",
