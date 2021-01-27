@@ -240,7 +240,11 @@ const UserSchema = new Schema({
     Save:{
         type:Boolean,
         default:false
-    }
+    },
+    LastInvestmentPayDay:{
+        type:String,
+    },
+
 },{timestamp:true})
 
 

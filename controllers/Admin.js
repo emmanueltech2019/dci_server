@@ -653,6 +653,7 @@ exports.payActiveInvestor=(req,res)=>{
       User.findOne({_id:req.body.userId})
       .then(response=>{
         response.investmentReturnsBalance=response.investmentReturnsBalance-parseInt(req.body.amount)
+        response.LastInvestmentPayDay=new Date()
         response.save((err,data)=>{
           if(err) res.send(err)
           res.send(data)
