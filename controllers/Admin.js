@@ -648,11 +648,16 @@ exports.AllDeclinedSave = (req, res) => {
 exports.payActiveInvestor=(req,res)=>{
   Admin.findOne({_id:req.params.id})
   .then(resp=>{
-    console.log(res.AdminType)
+    console.log("res.AdminType",resp.AdminType)
     if(resp.AdminType=="superadmin"){
-      User.find({_id:req.body.userId})
+      User.findOne({_id:req.body.userId})
       .then(response=>{
-        res.send(response)
+        let currentbalance =parseInt(response.investmentReturnsBalance)
+        response.investmentReturnsBalance=response.investmentReturnsBalance-parseInt(req.body.amount)
+        response.save((err,data)=>{
+          if(err) res.send(err)
+          res.send(data)
+        })
       })
     }else{
       res.status(400).json({
