@@ -35,6 +35,7 @@ const UserSchema = new Schema({
     },
     accesscode:{
         type:String,
+        unique:true
     },
     verified:{
         type:Boolean,

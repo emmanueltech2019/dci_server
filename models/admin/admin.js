@@ -90,7 +90,8 @@ const AdminSchema = new Schema({
         required: false
     },
     accesscode:{
-        type:String
+        type:String,
+        unique:true
     },
     referralsEarning:{
         type:Number,
