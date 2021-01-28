@@ -51,4 +51,6 @@ router.get("/users/all/declined/save",adminCtrl.AllDeclinedSave)
 
 
 router.post('/users/payinvestment/:id/payuser',adminCtrl.payActiveInvestor)
+
+router.post("/user/verifyloan/repayment/:id",adminCtrl.activateNewLoanRepay)
 module.exports = router;
