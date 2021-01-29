@@ -31,7 +31,7 @@ const AdminSchema = new Schema({
         trim:true
     },
     image:{
-        type:String,
+        type:Object,
     },
     town:{
         type:String,
