@@ -133,7 +133,7 @@ exports.AllInvestorsdeclined= (req, res) => {
   });
 };
 exports.Pending = (req, res) => {
-  User.find({ requestinvestment: true }).then((response) => {
+  User.find({ requestinvestment: true,declinedInvestment: "no" }).then((response) => {
     res.send(response);
   });
 };
@@ -304,7 +304,7 @@ exports.verifyinvestor = (req, res) => {
 };
 
 exports.PendingLoaner = (req, res) => {
-  User.find({ LoanRequest: true }).then((response) => {
+  User.find({ LoanRequest: true,declineLoaner:"no" }).then((response) => {
     res.send(response);
   });
 };
@@ -318,7 +318,7 @@ exports.verifyloaner = (req, res) => {
     } else {
       admin.activityLogs.push(req.body);
       admin.save();
-      User.findOneAndUpdate({ _id: req.body.user._id }, { LoanActive: true })
+      User.findOneAndUpdate({ _id: req.body.user._id }, { LoanActive: true,declineLoaner:"no",LoanRequest:false })
         .then((response) => {
           res.send(response);
         })
@@ -328,7 +328,7 @@ exports.verifyloaner = (req, res) => {
     }})
 };
 exports.PendingSaveAdd = (req, res) => {
-  User.find({ AddSaveRequest: true }).then((response) => {
+  User.find({ AddSaveRequest: true,declineSaver:"no" }).then((response) => {
     res.send(response);
   });
 };
@@ -418,7 +418,7 @@ exports.verifysti = (req, res) => {
 };
 
 exports.newUsers = (req, res) => {
-  User.find({ approvedUser: false }).then((response) => {
+  User.find({ approvedUser: false,declinedAccount:"no" }).then((response) => {
     res.send(response);
   });
 };
@@ -670,12 +670,9 @@ exports.payActiveInvestor=(req,res)=>{
 exports.activateNewLoanRepay=(req,res)=>{
   Admin.findOne({_id:req.params.id})
   .then(resp=>{
-    console.log("res.AdminType",resp.AdminType)
       User.findOne({_id:req.body.userId})
       .then(response=>{
         response.amountToRepayBalance=response.amountToRepayBalance-parseInt(req.body.amount)
-        // response.investmentReturnsBalance=response.investmentReturnsBalance-parseInt(req.body.amount)
-        // response.LastInvestmentPayDay=new Date()
         response.save((err,data)=>{
           if(err) res.send(err)
           res.send(data)

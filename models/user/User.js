@@ -216,6 +216,7 @@ const UserSchema = new Schema({
     },
     declinedAccount:{
         type:String,
+        default:"no"
     },
     declinedInvestment:{
         type:String,
@@ -244,6 +245,11 @@ const UserSchema = new Schema({
     LastInvestmentPayDay:{
         type:String,
     },
+    notifications:[
+        {
+            type:Object,
+        }
+    ]
 
 },{timestamp:true})
 

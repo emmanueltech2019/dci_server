@@ -105,13 +105,12 @@ const AdminSchema = new Schema({
     role:{
         type:String,
         default:"admin"
-    }
-    // activityLogs:[
-    //     {
-    //         type: Schema.Types.ObjectId,
-    //         ref: "Logs"
-    //     } 
-    // ]
+    },
+    notifications:[
+        {
+            type:Object,
+        }
+    ]
 
 },{ timestamps: true })
 
