@@ -126,20 +126,20 @@ exports.loanactivate=(req,res,next)=>{
         }})
 }
 
-// exports.paynowloan=(req,res,next)=>{
-//     User.findById({_id:req.params.id},(err,user)=>{
-//         if(err){
-//             res.send(err)
-//         }
-//         else{
-//             user.repayLoanRequest=true
-//             user.repayLoanRequestDets=req.body
-//             user.save().then(response=>{
-//                 res.json({
-//                     status:true,
-//                 })
-//             })
-//         }
-//     })
-// }
+exports.paynowloan=(req,res,next)=>{
+    User.findById({_id:req.params.id},(err,user)=>{
+        if(err){
+            res.send(err)
+        }
+        else{
+            user.repayLoanRequest=true
+            user.repayLoanRequestDets=req.body
+            user.save().then(response=>{
+                res.json({
+                    status:true,
+                })
+            })
+        }
+    })
+}
 
