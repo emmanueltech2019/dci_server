@@ -304,7 +304,7 @@ exports.verifyinvestor = (req, res) => {
 };
 
 exports.PendingLoaner = (req, res) => {
-  User.find({ LoanRequest: true,declineLoaner:"no" }).then((response) => {
+  User.find({ LoanRequest: true,declinedLoaner:"no" }).then((response) => {
     res.send(response);
   });
 };
