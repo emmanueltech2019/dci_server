@@ -89,11 +89,9 @@ exports.addItemToCart = (req, res) => {
                 const mainCart = cart.cartItems.findIndex(
                   (c) => c.product == product
                   );
-                  console.log("cart",cart.cartItems[mainCart])
                   
                 cart.cartItems[mainCart].quantity=cart.cartItems[mainCart].quantity+1
                   cart.save((err, data) => {
-                    console.log(data,err)
                     if (err) {
                       res.status(400).json({ error: err.response });
                       res.end();

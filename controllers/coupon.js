@@ -6,7 +6,6 @@ exports.createCoupon=(req,res)=>{
     Coupon.find({name},(err,coupon)=>{
         if(err) return res.status(400).json({err})
         if(coupon.length>0){
-            console.log(coupon)
             res.status(400).json({
                 message:"Coupon code already exist"
             })
@@ -21,7 +20,6 @@ exports.createCoupon=(req,res)=>{
                 slug:slugify(name)
             })
             coupon.save((error,coupon)=>{
-                console.log(coupon,error)
                 if(error) return res.status(400).json({error})
                 if(coupon){
                     res.status(201).json({

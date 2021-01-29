@@ -161,7 +161,6 @@ exports.verifyinvestor = (req, res) => {
       const year = d.getFullYear();
       const month = d.getMonth();
       const day = d.getDate();
-      console.log("investment step one")
       
       User.findById({ _id: req.body.user._id }, (err, user) => {
         let interval = 0;
@@ -176,7 +175,6 @@ exports.verifyinvestor = (req, res) => {
         ) {
           interval = 1;
         }
-        console.log("investment step one")
         if (user.investmentCount >= 1) {
           (user.investmentCount = user.investmentCount + 1),
             (user.activeplan = true),
@@ -649,7 +647,6 @@ exports.AllDeclinedSave = (req, res) => {
 exports.payActiveInvestor=(req,res)=>{
   Admin.findOne({_id:req.params.id})
   .then(resp=>{
-    console.log("res.AdminType",resp.AdminType)
     if(resp.AdminType=="superadmin"){
       User.findOne({_id:req.body.userId})
       .then(response=>{

@@ -15,7 +15,6 @@ exports.createProduct=(req,res)=>{
             return {img:file.filename}
         })
     }
-    console.log({})
     const product = new Product({
         name,
         slug:slugify(name),

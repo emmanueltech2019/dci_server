@@ -25,7 +25,6 @@ exports.upload = multer({ storage: storage });
 exports.requireSignin =(req,res,next)=>{
     if(req.headers.authorization){
         const token =req.headers.authorization.split(" ")[1]
-        console.log(process.env.SECRET_KEY,token)
         const user = jwt.verify(token,process.env.SECRET_KEY)
         req.user=user
     }
