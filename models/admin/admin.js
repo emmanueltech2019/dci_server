@@ -73,7 +73,7 @@ const AdminSchema = new Schema({
     },
     AdminType:{
         type:String,
-        default:"admin"
+        required:true
     },
     activityLogs:[
         {
