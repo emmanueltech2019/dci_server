@@ -674,6 +674,11 @@ exports.activateNewLoanRepay=(req,res)=>{
       User.findOne({_id:req.body.userId})
       .then(response=>{
         response.amountToRepayBalance=response.amountToRepayBalance-parseInt(req.body.amount)
+        if(response.amountToRepayBalance<=0){
+          response.LoanActive=false
+          response.LoanRequest=false
+          response.repayLoanRequest=false
+        }
         response.save((err,data)=>{
           if(err) res.send(err)
           res.send(data)
