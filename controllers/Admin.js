@@ -376,11 +376,11 @@ exports.PayLoan = (req, res) => {
   });
 };
 exports.verifypayloan = (req, res) => {
-  const { amount, nextDate } = req.body;
+  const { amount} = req.body;
   User.findById({ _id: req.params.id })
     .then((user) => {
-      user.repayLoanRequest = true;
       user.amountToRepayBalance = user.amountToRepayBalance - parseInt(amount);
+      user.repayLoanRequest = false;
       user.save((response1) => {
         res.json({
           user,
