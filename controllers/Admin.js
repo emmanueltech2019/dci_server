@@ -148,7 +148,6 @@ function addMonths(date, months) {
 }
 exports.verifyinvestor = (req, res) => {
   Admin.findById({ _id: req.body.id }, (err, admin) => {
-
     if (err) {
       res.status(400).json({
         message: "error occured or admin not found",
@@ -163,18 +162,8 @@ exports.verifyinvestor = (req, res) => {
       const day = d.getDate();
       
       User.findById({ _id: req.body.user._id }, (err, user) => {
-        let interval = 0;
-        if (
-          user.planDetails.dataName.split(" ")[0] === "AFI" ||
-          user.planDetails.dataName.split(" ")[0] === "BFI"
-        ) {
-          interval = 12;
-        } else if (
-          user.planDetails.dataName.split(" ")[0] === "AMI" ||
-          user.planDetails.dataName.split(" ")[0] === "BMI"
-        ) {
-          interval = 1;
-        }
+        let interval = parseInt(req.body.interval);
+        
         if (user.investmentCount >= 1) {
           (user.investmentCount = user.investmentCount + 1),
             (user.activeplan = true),
@@ -216,7 +205,7 @@ exports.verifyinvestor = (req, res) => {
                     interval
                   ).toString();
                   const amount = parseInt(user.planDetails.dataPrice);
-                  const percentageValue = 5;
+                  const percentageValue = parseInt(req.body.refPercentage);
                   const ammountForRefer = percentage(amount, percentageValue);
                   reffereduser.referralsEarning =
                     reffereduser.referralsEarning + ammountForRefer;
