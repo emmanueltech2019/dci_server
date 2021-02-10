@@ -157,7 +157,6 @@ function userExistChecker(userRefId) {
   })
 }
 exports.verifyinvestor = (req, res) => {
-  console.log('step 1')
   Admin.findById({ _id: req.body.id }, (err, admin) => {
     if (err) {
       res.status(400).json({
@@ -165,7 +164,6 @@ exports.verifyinvestor = (req, res) => {
         status: false,
       });
     } else {
-      console.log('step 2')
       admin.activityLogs.push(req.body);
       admin.save();
       const d = new Date();
@@ -174,13 +172,8 @@ exports.verifyinvestor = (req, res) => {
       const day = d.getDate();
       
       User.findById({ _id: req.body.user._id }, (err, user) => {
-        console.log(req.body)
-        console.log(user)
-        console.log('step 3')
         let interval = parseInt(user.planDetails.interval);
-        console.log('interval',interval)
         if (user.investmentCount >= 1) {
-          console.log('step 4')
           (user.investmentCount = user.investmentCount + 1),
             (user.activeplan = true),
             (user.LastInvestmentPayDay=new Date()),
