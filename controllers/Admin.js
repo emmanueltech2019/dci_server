@@ -176,11 +176,11 @@ exports.verifyinvestor = (req, res) => {
         if (user.investmentCount >= 1) {
           (user.investmentCount = user.investmentCount + 1),
             (user.activeplan = true),
-            (user.LastInvestmentPayDay=new Date()),
+            (user.LastInvestmentPayDay=`${day/month/year}`),
             (user.requestinvestment = false),
             (user.investmentReturnsBalance = user.planDetails.TotalROI),
             (user.investmentReturnsPercentage = parseInt(user.planDetails.percentage)),
-            (user.investmentStartDate = `${day/month/year}`),
+            (user.investmentStartDate = new Date()),
             (user.investmentNextPayDate = addMonths(
               new Date(year, month, day),
               interval
@@ -206,7 +206,7 @@ exports.verifyinvestor = (req, res) => {
                     });
                   }
                   user.activeplan = true;
-                  user.LastInvestmentPayDay=new Date()
+                  user.LastInvestmentPayDay=`${day/month/year}`
                   user.requestinvestment = false;
                   user.investmentReturnsBalance = user.planDetails.TotalROI;
                   user.investmentReturnsPercentage = user.planDetails.percentage;
@@ -250,7 +250,7 @@ exports.verifyinvestor = (req, res) => {
                     });
                   }
                   user.activeplan = true;
-                  user.LastInvestmentPayDay=new Date()
+                  user.LastInvestmentPayDay=`${day/month/year}`
                   user.requestinvestment = false;
                   user.investmentReturnsBalance = user.planDetails.TotalROI;
                   user.investmentReturnsPercentage = user.planDetails.percentage;
@@ -283,7 +283,7 @@ exports.verifyinvestor = (req, res) => {
           user.investmentCount = user.investmentCount + 1;
           // user.investmentCount = user.investmentCount + 1,
             user.activeplan = true,
-            user.LastInvestmentPayDay=new Date(),
+            user.LastInvestmentPayDay=`${day/month/year}`,
             user.requestinvestment = false,
             user.investmentReturnsBalance = user.planDetails.TotalROI,
             user.investmentReturnsPercentage = user.planDetails.percentage,
@@ -652,8 +652,12 @@ exports.payActiveInvestor=(req,res)=>{
     if(resp.AdminType=="superadmin"){
       User.findOne({_id:req.body.userId})
       .then(response=>{
+        const d = new Date();
+      const year = d.getFullYear();
+      const month = d.getMonth();
+      const day = d.getDate();
         response.investmentReturnsBalance=response.investmentReturnsBalance-parseInt(req.body.amount)
-        response.LastInvestmentPayDay=new Date()
+        response.LastInvestmentPayDay=`${day/month/year}`
         response.save((err,data)=>{
           if(err) res.send(err)
           res.send(data)
