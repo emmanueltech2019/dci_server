@@ -12,6 +12,12 @@ function percentage(num, per) {
   return (num / 100) * per;
 }
 
+
+var today =new Date()
+var dd = String(today.getDate()).padStart(2,'0')
+var mm = String(today.getMonth()+1).padStart(2,'0')
+var yyyy =today.getFullYear()
+today= dd+'/'+mm+'/'+yyyy
 exports.signup = (req, res, next) => {
   let accesscode;
   function gene() {
@@ -176,7 +182,7 @@ exports.verifyinvestor = (req, res) => {
         if (user.investmentCount >= 1) {
           (user.investmentCount = user.investmentCount + 1),
             (user.activeplan = true),
-            (user.LastInvestmentPayDay=`${day/month/year}`),
+            (user.LastInvestmentPayDay=today),
             (user.requestinvestment = false),
             (user.investmentReturnsBalance = user.planDetails.TotalROI),
             (user.investmentReturnsPercentage = parseInt(user.planDetails.percentage)),
@@ -206,7 +212,7 @@ exports.verifyinvestor = (req, res) => {
                     });
                   }
                   user.activeplan = true;
-                  user.LastInvestmentPayDay=`${day/month/year}`
+                  user.LastInvestmentPayDay=today
                   user.requestinvestment = false;
                   user.investmentReturnsBalance = user.planDetails.TotalROI;
                   user.investmentReturnsPercentage = user.planDetails.percentage;
@@ -250,7 +256,7 @@ exports.verifyinvestor = (req, res) => {
                     });
                   }
                   user.activeplan = true;
-                  user.LastInvestmentPayDay=`${day/month/year}`
+                  user.LastInvestmentPayDay=today
                   user.requestinvestment = false;
                   user.investmentReturnsBalance = user.planDetails.TotalROI;
                   user.investmentReturnsPercentage = user.planDetails.percentage;
@@ -283,7 +289,7 @@ exports.verifyinvestor = (req, res) => {
           user.investmentCount = user.investmentCount + 1;
           // user.investmentCount = user.investmentCount + 1,
             user.activeplan = true,
-            user.LastInvestmentPayDay=`${day/month/year}`,
+            user.LastInvestmentPayDay=today,
             user.requestinvestment = false,
             user.investmentReturnsBalance = user.planDetails.TotalROI,
             user.investmentReturnsPercentage = user.planDetails.percentage,
@@ -657,7 +663,7 @@ exports.payActiveInvestor=(req,res)=>{
       const month = d.getMonth();
       const day = d.getDate();
         response.investmentReturnsBalance=response.investmentReturnsBalance-parseInt(req.body.amount)
-        response.LastInvestmentPayDay=`${day/month/year}`
+        response.LastInvestmentPayDay=today`
         response.save((err,data)=>{
           if(err) res.send(err)
           res.send(data)
