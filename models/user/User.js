@@ -148,7 +148,7 @@ const UserSchema = new Schema({
         type:Object,
     },
     investmentReturnsPercentage:{
-        type:String,
+        type:Number,
         default:0,
     },
     amountToRepay:{
