@@ -192,7 +192,6 @@ exports.verifyinvestor = (req, res) => {
               new Date(year, month, day),
               interval
             ).toString());
-            console.log('step 5')
             user.save((err, data) => {
               if (err) res.send(err);
               res.send(data);
