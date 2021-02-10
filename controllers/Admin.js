@@ -146,6 +146,16 @@ function addMonths(date, months) {
   }
   return date;
 }
+function userExistChecker(userRefId) {
+  User.findOne({accesscode:userRefId},(err,user)=>{
+    if(!user){
+      return false
+    }if(user){
+      return false
+    }
+    
+  })
+}
 exports.verifyinvestor = (req, res) => {
   console.log('step 1')
   Admin.findById({ _id: req.body.id }, (err, admin) => {
@@ -186,7 +196,7 @@ exports.verifyinvestor = (req, res) => {
               if (err) res.send(err);
               res.send(data);
             });
-        } else if (user.investmentCount < 1 && user.referralsId) {
+        } else if (user.investmentCount < 1 && userExistChecker(user.referralsId)==true) {
           user.investmentCount = user.investmentCount + 1;
           Admin.find({ accesscode: user.referralsId },(err,users)=>{
             if(err) return res.status(404).json(err)
