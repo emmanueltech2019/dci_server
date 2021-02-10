@@ -162,14 +162,14 @@ exports.verifyinvestor = (req, res) => {
       const day = d.getDate();
       
       User.findById({ _id: req.body.user._id }, (err, user) => {
-        let interval = parseInt(req.body.interval);
+        let interval = parseInt(user.planDetails.interval);
         
         if (user.investmentCount >= 1) {
           (user.investmentCount = user.investmentCount + 1),
             (user.activeplan = true),
             (user.requestinvestment = false),
             (user.investmentReturnsBalance = user.planDetails.TotalROI),
-            (user.investmentReturnsPercentage = 0),
+            (user.investmentReturnsPercentage = user.planDetails.percentage),
             (user.investmentStartDate = new Date()),
             (user.investmentNextPayDate = addMonths(
               new Date(year, month, day),
@@ -198,14 +198,14 @@ exports.verifyinvestor = (req, res) => {
                   user.activeplan = true;
                   user.requestinvestment = false;
                   user.investmentReturnsBalance = user.planDetails.TotalROI;
-                  user.investmentReturnsPercentage = 0;
+                  user.investmentReturnsPercentage = user.planDetails.percentage;
                   user.investmentStartDate = new Date();
                   user.investmentNextPayDate = addMonths(
                     new Date(year, month, day),
                     interval
                   ).toString();
                   const amount = parseInt(user.planDetails.dataPrice);
-                  const percentageValue = parseInt(req.body.refPercentage);
+                  const percentageValue = parseInt(user.planDetails.refPercentage);
                   const ammountForRefer = percentage(amount, percentageValue);
                   reffereduser.referralsEarning =
                     reffereduser.referralsEarning + ammountForRefer;
@@ -241,14 +241,14 @@ exports.verifyinvestor = (req, res) => {
                   user.activeplan = true;
                   user.requestinvestment = false;
                   user.investmentReturnsBalance = user.planDetails.TotalROI;
-                  user.investmentReturnsPercentage = 0;
+                  user.investmentReturnsPercentage = user.planDetails.percentage;
                   user.investmentStartDate = new Date();
                   user.investmentNextPayDate = addMonths(
                     new Date(year, month, day),
                     interval
                   ).toString();
                   const amount = parseInt(user.planDetails.dataPrice);
-                  const percentageValue = 5;
+                  const percentageValue = user.planDetails.refPercentage;
                   const ammountForRefer = percentage(amount, percentageValue);
                   reffereduser.referralsEarning =
                     reffereduser.referralsEarning + ammountForRefer;
@@ -269,11 +269,11 @@ exports.verifyinvestor = (req, res) => {
         }
         else{
           user.investmentCount = user.investmentCount + 1;
-          user.investmentCount = user.investmentCount + 1,
+          // user.investmentCount = user.investmentCount + 1,
             user.activeplan = true,
             user.requestinvestment = false,
             user.investmentReturnsBalance = user.planDetails.TotalROI,
-            user.investmentReturnsPercentage = 0,
+            user.investmentReturnsPercentage = user.planDetails.percentage,
             user.investmentStartDate = new Date(),
             user.investmentNextPayDate = addMonths(
               new Date(year, month, day),
