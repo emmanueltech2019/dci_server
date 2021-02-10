@@ -196,7 +196,7 @@ exports.verifyinvestor = (req, res) => {
               if (err) res.send(err);
               res.send(data);
             });
-        } else if (user.investmentCount < 1 && userExistChecker(user.referralsId)==true) {
+        } else if (user.investmentCount < 1 && userExistChecker(user.referralsId)==true ) {
           user.investmentCount = user.investmentCount + 1;
           Admin.find({ accesscode: user.referralsId },(err,users)=>{
             if(err) return res.status(404).json(err)
