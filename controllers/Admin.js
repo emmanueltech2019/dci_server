@@ -663,7 +663,7 @@ exports.payActiveInvestor=(req,res)=>{
       const month = d.getMonth();
       const day = d.getDate();
         response.investmentReturnsBalance=response.investmentReturnsBalance-parseInt(req.body.amount)
-        response.LastInvestmentPayDay=today`
+        response.LastInvestmentPayDay=today
         response.save((err,data)=>{
           if(err) res.send(err)
           res.send(data)
