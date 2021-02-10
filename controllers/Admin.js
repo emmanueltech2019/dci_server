@@ -183,6 +183,7 @@ exports.verifyinvestor = (req, res) => {
           console.log('step 4')
           (user.investmentCount = user.investmentCount + 1),
             (user.activeplan = true),
+            (user.LastInvestmentPayDay=new Date()),
             (user.requestinvestment = false),
             (user.investmentReturnsBalance = user.planDetails.TotalROI),
             (user.investmentReturnsPercentage = parseInt(user.planDetails.percentage)),
@@ -213,6 +214,7 @@ exports.verifyinvestor = (req, res) => {
                     });
                   }
                   user.activeplan = true;
+                  user.LastInvestmentPayDay=new Date()
                   user.requestinvestment = false;
                   user.investmentReturnsBalance = user.planDetails.TotalROI;
                   user.investmentReturnsPercentage = user.planDetails.percentage;
@@ -256,6 +258,7 @@ exports.verifyinvestor = (req, res) => {
                     });
                   }
                   user.activeplan = true;
+                  user.LastInvestmentPayDay=new Date()
                   user.requestinvestment = false;
                   user.investmentReturnsBalance = user.planDetails.TotalROI;
                   user.investmentReturnsPercentage = user.planDetails.percentage;
@@ -288,6 +291,7 @@ exports.verifyinvestor = (req, res) => {
           user.investmentCount = user.investmentCount + 1;
           // user.investmentCount = user.investmentCount + 1,
             user.activeplan = true,
+            user.LastInvestmentPayDay=new Date(),
             user.requestinvestment = false,
             user.investmentReturnsBalance = user.planDetails.TotalROI,
             user.investmentReturnsPercentage = user.planDetails.percentage,
