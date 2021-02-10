@@ -180,7 +180,7 @@ exports.verifyinvestor = (req, res) => {
             (user.requestinvestment = false),
             (user.investmentReturnsBalance = user.planDetails.TotalROI),
             (user.investmentReturnsPercentage = parseInt(user.planDetails.percentage)),
-            (user.investmentStartDate = new Date()),
+            (user.investmentStartDate = `${day/month/year}`),
             (user.investmentNextPayDate = addMonths(
               new Date(year, month, day),
               interval
