@@ -163,6 +163,7 @@ exports.verifyinvestor = (req, res) => {
       
       User.findById({ _id: req.body.user._id }, (err, user) => {
         console.log(req.body)
+        console.log(req.user)
         let interval = parseInt(user.planDetails.interval);
         
         if (user.investmentCount >= 1) {
