@@ -46,7 +46,8 @@ exports.signup = (req, res, next) => {
       AdminType: req.body.type,
       password: hash,
       accesscode,
-      image:req.body.image
+      image:req.body.image,
+      regNoAdmin:req.body.regNoAdmin
     });
     user
       .save()

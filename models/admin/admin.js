@@ -75,6 +75,10 @@ const AdminSchema = new Schema({
         type:String,
         required:true
     },
+    regNoAdmin:{
+        type:String,
+        required:true
+    },
     activityLogs:[
         {
             type: Object,
