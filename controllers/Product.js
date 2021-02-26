@@ -10,10 +10,14 @@ exports.createProduct=(req,res)=>{
     // })
     const {name,price,description,category,quantity} =req.body
     let productPictures =[]
-    if(req.files.length >0){
-        productPictures = req.files.map(file=>{
-            return {img:file.secure_url}
-        })
+    // if(req.file.length >0){
+    //     productPictures = req.files.map(file=>{
+    //         return {img:file.secure_url}
+    //     })
+    // }
+    if(req.file){
+        console.log(req.file)
+        productPictures.push({img:req.file.secure_url})
     }
     const product = new Product({
         name,
