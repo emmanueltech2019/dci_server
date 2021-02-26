@@ -3,7 +3,7 @@ const { createProduct,allProducts,singleProduct} = require('../../controllers/Pr
 const router =express.Router()
 const { requireSignin, adminMiddleware, upload } = require('../../common-middlewares')
 
-router.post('/product/create',requireSignin,adminMiddleware,upload.array('productPicture'),createProduct)
+router.post('/product/create',requireSignin,adminMiddleware,upload.single('productPicture'),createProduct)
 router.get('/products/all',allProducts)
 router.get('/products/:id/single',singleProduct)
 
