@@ -54,7 +54,7 @@ exports.getCategories = (req, res) => {
 };
 
 exports.singleCategoryProducts = (req, res) => {
-  Category.findOne({ _id: req.params.id }, (err, category) => {
+  Category.findOne({ slug: req.params.slug }, (err, category) => {
     if (err) res.status(400).json({ error: err });
     if (category) {
       Products.find({ category: category._id }, (err, products) => {

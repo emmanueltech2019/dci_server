@@ -46,7 +46,7 @@ const productSchema =new Schema({
         }
     ],
     category:{type:Schema.Types.ObjectId,ref:"Category",required:true},
-    createdBy:{type:Schema.Types.ObjectId,ref:"Admin",required:true},
+    createdBy:{type:Schema.Types.ObjectId,ref:"Adminq",required:true},
     updatedAt:Date
 
 },{timestamps:true})
