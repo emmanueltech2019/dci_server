@@ -17,7 +17,7 @@ exports.createProduct=(req,res)=>{
     // }
     if(req.file){
         console.log(req.file)
-        productPictures.push({img:req.file.secure_url})
+        productPictures.push({img:req.file.path})
     }
     const product = new Product({
         name,
