@@ -89,8 +89,16 @@ exports.addItemToCart = (req, res) => {
                 const mainCart = cart.cartItems.findIndex(
                   (c) => c.product == product
                   );
-                  
-                cart.cartItems[mainCart].quantity=cart.cartItems[mainCart].quantity+1
+                  if(req.body.action=="remove" ){
+                    if(cart.cartItems[mainCart].quantity ==1){
+
+                    }else{
+                      cart.cartItems[mainCart].quantity=cart.cartItems[mainCart].quantity-1
+                    }
+                  }if(req.body.action=="add"){
+                    cart.cartItems[mainCart].quantity=cart.cartItems[mainCart].quantity+1
+                  }
+                // cart.cartItems[mainCart].quantity=cart.cartItems[mainCart].quantity+1
                   cart.save((err, data) => {
                     if (err) {
                       res.status(400).json({ error: err.response });
@@ -156,17 +164,20 @@ exports.getCartItems = (req, res) => {
     .exec((error, cart) => {
       if (error) return res.status(400).json({ error });
       if (cart) {
-        console.log(cart)
         let cartItems = {};
         cart.cartItems.forEach((item, index) => {
-          console.log(item.product)
-          cartItems[item.product._id.toString()] = {
-            _id: item.product._id.toString(),
-            name: item.product.name,
-            img: item.product.productPictures[0]?item.product.productPictures[0].img:null,
-            price: item.product.price,
-            qty: item.quantity,
-          };
+          if(item.product==null){
+
+          }
+          else{
+            cartItems[item.product._id.toString()] = {
+              _id: item.product._id.toString(),
+              name: item.product.name,
+              img: item.product.productPictures[0]?item.product.productPictures[0].img:null,
+              price: item.product.price,
+              qty: item.quantity,
+            };
+          }
         });
         res.status(200).json({ cartItems });
       }
