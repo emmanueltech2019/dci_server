@@ -193,7 +193,7 @@ exports.removeCartItem=(req,res)=>{
       })
     }
     if(cart){
-      cart.cartItem = cart.cartItem.filter((item)=>{
+      cart.cartItems = cart.cartItems.filter((item)=>{
         return item.product._id !=req.params.productid
       })
       cart.save()
