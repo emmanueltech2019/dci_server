@@ -156,6 +156,7 @@ exports.getCartItems = (req, res) => {
     .exec((error, cart) => {
       if (error) return res.status(400).json({ error });
       if (cart) {
+        console.log(cart)
         let cartItems = {};
         cart.cartItems.forEach((item, index) => {
           console.log(item.product)
