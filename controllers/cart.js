@@ -158,6 +158,7 @@ exports.getCartItems = (req, res) => {
       if (cart) {
         let cartItems = {};
         cart.cartItems.forEach((item, index) => {
+          console.log(item.product)
           cartItems[item.product._id.toString()] = {
             _id: item.product._id.toString(),
             name: item.product.name,
