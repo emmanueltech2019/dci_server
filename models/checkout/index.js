@@ -2,42 +2,26 @@ const {Schema,model} = require('mongoose')
 
 
 const checkoutSchema= new Schema({
-    Firstname:{
-        type:String,
-        required:true,
-        trim:true,
+    address:{
+        type:Boolean,
+        default:false
     },
-    Lastname:{
-        type:String,
-        required:true,
-        trim:true,
-    },
-    Company:{
-        type:String,
-        trim:true,
-    },
-    Street:{
-        type:String,
-        required:true,
-        trim:true,
-    },
-    Telephone:{
-        type:String,
-        required:true,
-        trim:true,
-    },
-    Email:{
-        type:String,
-        required:true,
-        trim:true,
-    },
-    deliveryMethod:{
+    addressDetails:{
         type:Object,
         default:{}
     },
     deliveryMethod:{
         type:Object,
         default:{}
+    },
+    paymentMethod:{
+        type:Object,
+        default:{}
+    },
+    user:{
+        type:Schema.Types.ObjectId,
+        ref:"User",
+        required:true
     }
 
 })
