@@ -27,4 +27,4 @@ const checkoutSchema= new Schema({
 })
 
 
-module.exports=model('Category',checkoutSchema) 
+module.exports=model('Checkout',checkoutSchema) 
