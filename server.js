@@ -42,6 +42,7 @@ app.use("/api/v1/shop/",require("./routes/Product"))
 app.use("/api/v1/shop/",require("./routes/Cart"))
 app.use("/api/v1/shop/",require("./routes/Coupon"))
 app.use("/api/v1/shop/",require("./routes/checkout"))
+app.use("/api/v1/shop/",require("./routes/order"))
 app.use("/api/v1/admin/",require("./routes/Admin/Admin"))
 const APPPORT = process.env.PORT||PORT
 app.listen(APPPORT,()=>{

@@ -4,7 +4,8 @@ const {Schema,model} =require('mongoose')
 const orderSchema= new Schema({
     orders:{
         order:{
-            type:Number
+            type:Number,
+            default:0
         },
         dateOfOrder:{
             type:Date,
