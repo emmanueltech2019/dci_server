@@ -2,6 +2,7 @@ const Checkout = require("../models/checkout");
 exports.addressDetails = (req, res) => {
   const { addressDetails } = req.body;
   Checkout.findOne({ user: req.user.id }, (err, checkout) => {
+    console.log(err, checkout)
     if (err) {
       return res.status(400).json({
         message: "an error occured",
@@ -11,6 +12,7 @@ exports.addressDetails = (req, res) => {
       let newcheckoutlist = new Checkout({
         address: true,
         addressDetails,
+        user:req.user.id
       });
       newcheckoutlist
         .save()
