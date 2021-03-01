@@ -3,7 +3,7 @@ const User = require('../models/user/User')
 
 exports.placeOrder=(req,res)=>{
     
-    User.findById({_id:req.user.id},()=>{
+    User.findById({_id:req.user.id},(err,user)=>{
         if(err){
             return res.status(400).json({
                 message:'an error occured'
