@@ -8,7 +8,7 @@ exports.createProduct=(req,res)=>{
     //     file:req.files,
     //     body:req.body
     // })
-    const {name,price,description,category,quantity} =req.body
+    const {name,price,description,category,quantity,size} =req.body
     let productPictures =[]
     // if(req.file.length >0){
     //     productPictures = req.files.map(file=>{
@@ -25,6 +25,7 @@ exports.createProduct=(req,res)=>{
         price,
         quantity,
         description,
+        size,
         productPictures,
         category,
         createdBy:req.user.id,

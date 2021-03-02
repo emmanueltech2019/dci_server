@@ -27,6 +27,11 @@ const productSchema =new Schema({
         trim:true
     },
     offer:{type:Number},
+    szie:{ 
+        type:Number,
+        required:true,
+        default:1
+    },
     productPictures:[
         {
             img:{

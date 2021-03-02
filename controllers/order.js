@@ -1,4 +1,5 @@
 // const Order =require('../models/orders')
+const Cart = require('../models/Cart')
 const User = require('../models/user/User')
 
 exports.placeOrder=(req,res)=>{
@@ -10,7 +11,7 @@ exports.placeOrder=(req,res)=>{
             })
         }
         if (user) {
-            res.send(user)
+            // Cart.findOne({user:user._id},())
         }
         if (!user) {
             return res.status(404).json({
