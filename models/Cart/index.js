@@ -21,6 +21,9 @@ const cartSchema= new Schema({
             price:{
                 type:Number,
                 // required:true
+            },
+            size:{
+                type:Number,
             }
         }
     ]
