@@ -27,7 +27,7 @@ const productSchema =new Schema({
         trim:true
     },
     offer:{type:Number},
-    szie:{ 
+    size:{ 
         type:Number,
         required:true,
         default:1

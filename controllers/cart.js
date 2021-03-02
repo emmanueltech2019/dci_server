@@ -176,6 +176,7 @@ exports.getCartItems = (req, res) => {
               img: item.product.productPictures[0]?item.product.productPictures[0].img:null,
               price: item.product.price,
               qty: item.quantity, 
+              size: item.size, 
             };
           }
         });
