@@ -1,4 +1,5 @@
 const Cart = require("../models/Cart");
+const Product = require("../models/Product");
 
 // exports.addItemToCart=(req,res)=>{
 
@@ -170,13 +171,19 @@ exports.getCartItems = (req, res) => {
 
           }
           else{
+            let size
+           Product.findOne({_id:item.product._id},(err,product)=>{
+             size=product.size
+             console.log('seze',product)
+             console.log('seze mk',size)
+           })
             cartItems[item.product._id.toString()] = {
               _id: item.product._id.toString(),
               name: item.product.name,
               img: item.product.productPictures[0]?item.product.productPictures[0].img:null,
               price: item.product.price,
               qty: item.quantity, 
-              size: item.product.size, 
+              size
             };
           }
         });
