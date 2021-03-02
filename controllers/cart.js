@@ -172,9 +172,9 @@ exports.getCartItems = (req, res) => {
           }
           else{
             
-            let size =  function dataSize(params) {
+            function dataSize(params) {
               Product.findOne({_id:item.product._id},(err,product)=>{
-               return product.size
+               return {S:product.size}
              })
             }
             cartItems[item.product._id.toString()] = {
@@ -183,10 +183,9 @@ exports.getCartItems = (req, res) => {
               img: item.product.productPictures[0]?item.product.productPictures[0].img:null,
               price: item.product.price,
               qty: item.quantity, 
-              size:item.size
+              size:item.size||item.quantity9
             };
-            console.log('item.size',size())
-            console.log('item.size',item.product)
+            console.log('item.size',dataSize())
           }
         });
         res.status(200).json({ cartItems });
