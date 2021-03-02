@@ -172,9 +172,11 @@ exports.getCartItems = (req, res) => {
           }
           else{
             
-            function dataSize(params) {
-              Product.findOne({_id:item.product._id},(err,product)=>{
-               return {S:product.size}
+            function dataSize() {
+              Product.findOne({_id:item.product._id})
+             .then((product)=>{
+               console.log(product)
+              //  return {data:product[index].size}
              })
             }
             cartItems[item.product._id.toString()] = {

@@ -44,3 +44,23 @@ exports.allCoupons=(req,res)=>{
         })
     })
 }
+exports.singleCoupon=(req,res)=>{
+    const {slug} =req.body
+    Coupon.findOne({slug},(err,coupon)=>{
+        if(err){
+            res.status(400).json({
+                error:err
+            })
+        }
+        if (coupon) {
+            res.status(200).json({
+                coupon
+            })
+        }
+        if (!coupon) {
+            res.status(404).json({
+                message:'this coupon does not exist or has expired'
+            })
+        }
+    })
+}

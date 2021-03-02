@@ -49,7 +49,7 @@ exports.checkoutDelivery = (req, res) => {
   const { deliveryMethod } = req.body;
   Checkout.findOne({ user: req.user.id }, (err, checkout) => {
     if (err) {
-      return res.status(400).jsnon({
+      return res.status(400).json({
         message: "an errror occured",
       });
     }
@@ -74,7 +74,7 @@ exports.paymentMethod = (req, res) => {
   const { paymentMethod } = req.body;
   Checkout.findOne({ user: req.user.id }, (err, checkout) => {
     if (err) {
-      return res.status(400).jsnon({
+      return res.status(400).json({
         message: "an errror occured",
       });
     }
@@ -95,3 +95,24 @@ exports.paymentMethod = (req, res) => {
     }
   });
 };
+
+
+exports.checkOutDetail=(req,res)=>{
+  Checkout.findOne({user:req.user.id},(err,checkout)=>{
+    if (err) {
+      return res.status(400).json({
+        message: "an errror occured",
+      });
+    }
+    if (!checkout) {
+      return res.status(400).json({
+        message: "you have not purchased anything on our shop before",
+      });
+    }
+    if (checkout) {
+      return res.status(400).json({
+        checkout
+      });
+    }
+  })
+}
