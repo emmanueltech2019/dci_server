@@ -171,11 +171,9 @@ exports.getCartItems = (req, res) => {
 
           }
           else{
-            let size
-           Product.findOne({_id:item.product._id},(err,product)=>{
-             size=product.size
-             console.log('seze',product)
-             console.log('seze mk',size)
+            
+            let size =  Product.findOne({_id:item.product._id},(err,product)=>{
+             return product.size
            })
             cartItems[item.product._id.toString()] = {
               _id: item.product._id.toString(),
