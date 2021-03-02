@@ -186,6 +186,8 @@ exports.getCartItems = (req, res) => {
               size:item.size
             };
             console.log('item.size',item.size)
+            console.log('item.size',item.product.size)
+            console.log('item.size',size)
           }
         });
         res.status(200).json({ cartItems });
