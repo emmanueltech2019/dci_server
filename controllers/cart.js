@@ -177,7 +177,6 @@ exports.getCartItems = (req, res) => {
                return product.size
              })
             }
-            dataSize()
             cartItems[item.product._id.toString()] = {
               _id: item.product._id.toString(),
               name: item.product.name,
