@@ -106,12 +106,12 @@ exports.checkOutDetail=(req,res)=>{
       });
     }
     if (!checkout) {
-      return res.status(200).json({
+      return res.status(400).json({
         message: "you have not purchased anything on our shop before",
       });
     }
     if (checkout) {
-      return res.status(400).json({
+      return res.status(200).json({
         checkout
       });
     }
