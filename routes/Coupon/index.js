@@ -6,6 +6,6 @@ const router =express.Router()
 
 router.post('/coupon/create',requireSignin,adminMiddleware,createCoupon)
 router.get('/coupon/getCoupons',allCoupons)
-router.get('/coupon',singleCoupon)
+router.post('/coupon',singleCoupon)
 
 module.exports =router
