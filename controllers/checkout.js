@@ -128,7 +128,7 @@ exports.PaymentShopTransfer=(req,res)=>{
     }
     if(user){
       user.newshopPayment=true
-      user.shopPayments=user.shopPayments.push(details)
+      user.shopPayments.push(details)
       user.save()
       .then(user=>{
         return res.status(200).json({
