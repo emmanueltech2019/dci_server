@@ -256,6 +256,14 @@ const UserSchema = new Schema(
         type: Object,
       },
     ],
+    shopPayments: [
+      {
+        type: Object,
+      },
+    ],
+    newshopPayment:{
+      type:Boolean
+    }
   },
   { timestamp: true }
 );
